@@ -1,3 +1,3 @@
-export { GameTemplateRules } from './GameTemplateRules'
-export { GameTemplateOptionsSpecV2 } from './GameTemplateOptions'
-export { GameTemplateSetup } from './GameTemplateSetup'
+export { DjeserRules } from './DjeserRules'
+export { DjeserOptionsSpecV2 } from './DjeserOptions'
+export { DjeserSetup } from './DjeserSetup'

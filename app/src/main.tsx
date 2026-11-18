@@ -1,6 +1,6 @@
-import { GameTemplateOptionsSpecV2 } from '@gamepark/game-template/GameTemplateOptions'
-import { GameTemplateRules } from '@gamepark/game-template/GameTemplateRules'
-import { GameTemplateSetup } from '@gamepark/game-template/GameTemplateSetup'
+import { DjeserOptionsSpecV2 } from '@gamepark/djeser/DjeserOptions'
+import { DjeserRules } from '@gamepark/djeser/DjeserRules'
+import { DjeserSetup } from '@gamepark/djeser/DjeserSetup'
 import { GameProvider } from '@gamepark/react-game'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -12,10 +12,10 @@ import { Material } from './material/Material'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <GameProvider
-      game="game-template"
-      Rules={GameTemplateRules}
-      optionsSpec={GameTemplateOptionsSpecV2}
-      GameSetup={GameTemplateSetup}
+      game="djeser"
+      Rules={DjeserRules}
+      optionsSpec={DjeserOptionsSpecV2}
+      GameSetup={DjeserSetup}
       material={Material}
       locators={Locators}
       animations={gameAnimations}
