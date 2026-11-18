@@ -1,7 +1,13 @@
 {
-  "identities": "Цвет",
-  "identities.1": "Синий",
-  "identities.2": "Красный",
-  "identities.3": "Зелёный",
-  "identities.4": "Жёлтый"
+  "option.commonObjectives": "Карты Общей цели",
+  "option.commonObjectives.help": "В игру вводится по одной карте Общей цели каждого типа. Для первой партии правила советуют играть без них.",
+  "option.soloDifficulty": "Сложность",
+  "option.soloDifficulty.0": "Знакомство",
+  "option.soloDifficulty.0.help": "Без карт Общей цели.",
+  "option.soloDifficulty.1": "Легко",
+  "option.soloDifficulty.1.help": "1 карта Общей цели, которую нужно выполнить для победы.",
+  "option.soloDifficulty.2": "Сложно",
+  "option.soloDifficulty.2.help": "2 карты Общей цели разных типов, которые нужно выполнить для победы.",
+  "option.soloDifficulty.3": "Очень сложно",
+  "option.soloDifficulty.3.help": "3 карты Общей цели, по одной каждого типа, которые нужно выполнить для победы."
 }

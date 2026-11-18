@@ -1,7 +1,13 @@
 {
-  "identities": "Color",
-  "identities.1": "Blue",
-  "identities.2": "Red",
-  "identities.3": "Green",
-  "identities.4": "Yellow"
+  "option.commonObjectives": "Common Objective cards",
+  "option.commonObjectives.help": "One Common Objective card of each type is put into play. For your first game, the rulebook suggests playing without them.",
+  "option.soloDifficulty": "Difficulty",
+  "option.soloDifficulty.0": "Discovery",
+  "option.soloDifficulty.0.help": "Without Common Objective cards.",
+  "option.soloDifficulty.1": "Easy",
+  "option.soloDifficulty.1.help": "1 Common Objective card, which you must complete to win.",
+  "option.soloDifficulty.2": "Hard",
+  "option.soloDifficulty.2.help": "2 Common Objective cards of different types, which you must complete to win.",
+  "option.soloDifficulty.3": "Very hard",
+  "option.soloDifficulty.3.help": "3 Common Objective cards, one of each type, which you must complete to win."
 }

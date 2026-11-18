@@ -1,7 +1,13 @@
 {
-  "identities": "Colore",
-  "identities.1": "Blu",
-  "identities.2": "Rosso",
-  "identities.3": "Verde",
-  "identities.4": "Giallo"
+  "option.commonObjectives": "Carte Obiettivo Comune",
+  "option.commonObjectives.help": "Viene messa in gioco una carta Obiettivo Comune per ogni tipo. Per la prima partita, il regolamento consiglia di giocare senza.",
+  "option.soloDifficulty": "Difficoltà",
+  "option.soloDifficulty.0": "Scoperta",
+  "option.soloDifficulty.0.help": "Senza carte Obiettivo Comune.",
+  "option.soloDifficulty.1": "Facile",
+  "option.soloDifficulty.1.help": "1 carta Obiettivo Comune, che devi realizzare per vincere.",
+  "option.soloDifficulty.2": "Difficile",
+  "option.soloDifficulty.2.help": "2 carte Obiettivo Comune di tipi diversi, che devi realizzare per vincere.",
+  "option.soloDifficulty.3": "Molto difficile",
+  "option.soloDifficulty.3.help": "3 carte Obiettivo Comune, una per ogni tipo, che devi realizzare per vincere."
 }

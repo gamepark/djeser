@@ -1,7 +1,13 @@
 {
-  "identities": "Color",
-  "identities.1": "Azul",
-  "identities.2": "Rojo",
-  "identities.3": "Verde",
-  "identities.4": "Amarillo"
+  "option.commonObjectives": "Cartas Objetivo Común",
+  "option.commonObjectives.help": "Se pone en juego una carta Objetivo Común de cada tipo. Para tu primera partida, el reglamento recomienda jugar sin ellas.",
+  "option.soloDifficulty": "Dificultad",
+  "option.soloDifficulty.0": "Descubrimiento",
+  "option.soloDifficulty.0.help": "Sin cartas Objetivo Común.",
+  "option.soloDifficulty.1": "Fácil",
+  "option.soloDifficulty.1.help": "1 carta Objetivo Común, que debes cumplir para ganar.",
+  "option.soloDifficulty.2": "Difícil",
+  "option.soloDifficulty.2.help": "2 cartas Objetivo Común de tipos distintos, que debes cumplir para ganar.",
+  "option.soloDifficulty.3": "Muy difícil",
+  "option.soloDifficulty.3.help": "3 cartas Objetivo Común, una de cada tipo, que debes cumplir para ganar."
 }

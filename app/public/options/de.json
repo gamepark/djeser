@@ -1,7 +1,13 @@
 {
-  "identities": "Farbe",
-  "identities.1": "Blau",
-  "identities.2": "Rot",
-  "identities.3": "Grün",
-  "identities.4": "Gelb"
+  "option.commonObjectives": "Gemeinschaftszielkarten",
+  "option.commonObjectives.help": "Von jedem Typ kommt eine Gemeinschaftszielkarte ins Spiel. Für die erste Partie empfiehlt die Spielregel, ohne sie zu spielen.",
+  "option.soloDifficulty": "Schwierigkeit",
+  "option.soloDifficulty.0": "Entdeckung",
+  "option.soloDifficulty.0.help": "Ohne Gemeinschaftszielkarte.",
+  "option.soloDifficulty.1": "Leicht",
+  "option.soloDifficulty.1.help": "1 Gemeinschaftszielkarte, die du erfüllen musst, um zu gewinnen.",
+  "option.soloDifficulty.2": "Schwer",
+  "option.soloDifficulty.2.help": "2 Gemeinschaftszielkarten verschiedener Typen, die du erfüllen musst, um zu gewinnen.",
+  "option.soloDifficulty.3": "Sehr schwer",
+  "option.soloDifficulty.3.help": "3 Gemeinschaftszielkarten, eine von jedem Typ, die du erfüllen musst, um zu gewinnen."
 }
