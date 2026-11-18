@@ -1,1 +1,11 @@
-{}
+{
+  "header.turn.you.start": "Vous avez 3 PA : collectez, posez ou défaussez des cartes Pierre",
+  "header.turn.you": "Il vous reste {ap} PA : collectez, posez ou défaussez des cartes Pierre, ou <end>terminez votre tour</end>",
+  "header.turn.you.done": "Vous avez dépensé vos 3 PA : <end>Terminer mon tour</end>",
+  "header.turn.you.blocked": "Aucune action possible : <end>Terminer mon tour</end>",
+  "header.turn.player": "{player} joue ({ap} PA restants)",
+  "header.discard.you": "Défaussez la 1re Pierre du Nil dans la défausse des <values>valeurs</values> ou des <colors>couleurs</colors>",
+  "header.discard.player": "{player} doit défausser la 1re Pierre du Nil",
+  "header.end-of-turn": "Le Nil se remplit",
+  "header.end-of-turn.solo": "Imhotep pose une Pierre, puis le Nil se remplit"
+}

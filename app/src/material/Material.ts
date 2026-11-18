@@ -4,7 +4,8 @@ import { LocationType } from '@gamepark/djeser/material/LocationType'
 import { MaterialType } from '@gamepark/djeser/material/MaterialType'
 import { NileCard } from '@gamepark/djeser/material/NileCard'
 import { StoneCard } from '@gamepark/djeser/material/StoneCard'
-import { CardDescription, MaterialDescription } from '@gamepark/react-game'
+import { CardDescription, ItemContext, MaterialDescription } from '@gamepark/react-game'
+import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import {
   curseImages,
   FirstPlayerCard,
@@ -33,6 +34,17 @@ abstract class PortraitCardDescription<Id> extends CardDescription<number, Mater
 class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
   images = stoneImages
   backImage = StoneBack
+
+  /**
+   * A Stone card of the Nile or the quarry can only go to the hand: a click collects it. Placing and discarding are dragged.
+   * A click anywhere on the quarry draws its top card.
+   */
+  canShortClick(move: MaterialMove<number, MaterialType, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    if (!isMoveItemType(MaterialType.StoneCard)(move) || move.location.type !== LocationType.PlayerHand) return false
+    if (move.itemIndex === context.index) return true
+    const stones = context.rules.material(MaterialType.StoneCard)
+    return stones.getItem(context.index).location.type === LocationType.Quarry && stones.getItem(move.itemIndex).location.type === LocationType.Quarry
+  }
 }
 
 class NileCardDescription extends LandscapeCardDescription<NileCard> {
