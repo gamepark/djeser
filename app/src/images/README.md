@@ -49,4 +49,16 @@ Objective numbers:
 | 8 | Only odd values on level I | 17 | At least 2 yellow cards |
 | 9 | Only even values on level I | 18 | At least 2 cards of the same value |
 
+## Cover, box and icon (`app/public`)
+
+All made from the box flat `Djeser-Box.jpg` (blue fold lines at x 2680 | 3707 | 4016, y 337 | 645 | 2084):
+front panel = crop 1022 × 1434 at (2683, 648), right side = 304 × 1434 at (3710, 648), top = 1022 × 303
+at (2683, 340).
+
+- `cover-1920.jpg` / `.webp`: the front panel at full height in the middle; the sides are its outer 40 px
+  stretched and blurred (sand band reused below the logos), the front's edges faded into them.
+- `box-640.png` / `.webp`: oblique view of front, right side (darkened) and top, light baked-in shadow.
+- `avatar-*.png`, `favicon-96x96.png`, `favicon.svg`, `favicon.ico`: the sphinx head, square crop
+  630 × 630 at (196, 330) of the front panel.
+
 Not cut: the 4 double-sided player aid cards (row 8 of the 32-card sheet), replaced by the help dialogs.
