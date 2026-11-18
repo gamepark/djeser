@@ -1,10 +1,14 @@
+import { css } from '@emotion/react'
 import { LocationType } from '@gamepark/djeser/material/LocationType'
 import { MaterialType } from '@gamepark/djeser/material/MaterialType'
-import { DeckLocator, ItemContext, ListLocator, Locator, MaterialContext } from '@gamepark/react-game'
+import { DeckLocator, DropAreaDescription, ItemContext, ListLocator, Locator, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import { GameState } from '@gamepark/djeser/rules/GameState'
 import { HandCountDescription } from './HandCountDescription'
 import {
+  cardBorderRadius,
+  cardHeight,
+  cardWidth,
   curseCardSpot,
   cursedNileShift,
   cursedDiscardSpot,
@@ -96,7 +100,19 @@ class PlayerHandLocator extends ListLocator<number, MaterialType, LocationType> 
   }
 }
 
+/** A slot of a pyramid is the size of a card: it lights up when a card can be placed there, and the tutorial can focus it. */
+const pyramidSlotDescription = new DropAreaDescription<number, MaterialType, LocationType>({
+  width: cardWidth,
+  height: cardHeight,
+  borderRadius: cardBorderRadius,
+  extraCss: css`
+    border: 0.1em dashed rgba(255, 255, 255, 0.8);
+  `
+})
+
 class PyramidLocator extends Locator<number, MaterialType, LocationType> {
+  locationDescription = pyramidSlotDescription
+
   getCoordinates(location: Loc, context: Context) {
     return playerPyramidSpot(context.rules, location.player!, context.player, location.x ?? 0, location.y ?? 0)
   }
