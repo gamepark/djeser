@@ -49,6 +49,11 @@ export const cursedDiscardSpot = (curse: CurseType): XYCoordinates => ({ x: curs
 const nileX = (x: number) => sharedLeft + curseBlockWidth + 1.5 + cardWidth / 2 + x * cardPitch
 export const nileCardSpot = (x: number): XYCoordinates => ({ x: nileX(x), y: cardHeight / 2 })
 export const nileStoneSpot = (x: number): XYCoordinates => ({ x: nileX(x), y: cardHeight + 0.3 + cardHeight / 2 })
+/**
+ * Tip of the rulebook: "To make them easier to spot, slightly shift the Stone cards of the cursed color or value on the Nile."
+ * They are shifted down, within the height of the cursed discard piles (request of the publisher, 18/11/2026).
+ */
+export const cursedNileShift = 1.5
 /** The quarry is under the 7th Nile card, upright (rotated a quarter turn). */
 export const quarrySpot: XYCoordinates = { x: nileX(6), y: cardHeight + 0.3 + cardWidth / 2 }
 

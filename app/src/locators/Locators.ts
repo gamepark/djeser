@@ -2,9 +2,11 @@ import { LocationType } from '@gamepark/djeser/material/LocationType'
 import { MaterialType } from '@gamepark/djeser/material/MaterialType'
 import { DeckLocator, ItemContext, ListLocator, Locator, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
+import { GameState } from '@gamepark/djeser/rules/GameState'
 import { HandCountDescription } from './HandCountDescription'
 import {
   curseCardSpot,
+  cursedNileShift,
   cursedDiscardSpot,
   firstPlayerSpot,
   handCountSpot,
@@ -37,6 +39,13 @@ class NileCardLineLocator extends Locator<number, MaterialType, LocationType> {
 class NileLocator extends Locator<number, MaterialType, LocationType> {
   getCoordinates(location: Loc) {
     return nileStoneSpot(location.x ?? 0)
+  }
+
+  /** The Stone cards that cannot be collected because they are cursed are shifted down. */
+  getItemCoordinates(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    const { x, y } = nileStoneSpot(item.location.x ?? 0)
+    const cursed = new GameState(context.rules.game).isCursed(item.id)
+    return { x, y: cursed ? y + cursedNileShift : y }
   }
 }
 
