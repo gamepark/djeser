@@ -1,6 +1,4 @@
 {
-  "option.filledDiscards": "Défausses maudites garnies au départ",
-  "option.filledDiscards.help": "Une carte Pierre est placée dans chaque défausse maudite pendant la mise en place. Pour une première partie, la règle conseille de les laisser vides.",
   "option.commonObjectives": "Cartes Objectif Commun",
   "option.commonObjectives.help": "Une carte Objectif Commun de chaque type est mise en jeu. Pour une première partie, la règle conseille de jouer sans.",
   "option.soloDifficulty": "Difficulté",

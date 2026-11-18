@@ -9,9 +9,11 @@ import { MaterialRules, XYCoordinates } from '@gamepark/rules-api'
  * At the top, the shared area, laid out like the setup of the rulebook (page 3), from left to right:
  * the 2 cursed discard cards, each with its pile under it, then the Nile (the 7 Nile cards, with the Stone cards
  * under them and the quarry under the 7th), then the Common Objective cards.
- * Under it, the areas of the players in rows of 2, starting with the player who looks at the table:
- * their pyramid, their hand under it, and the first player card in the free corner left of level III.
+ * Under it, the pyramids of the players in rows of 2, starting with the player who looks at the table, with the
+ * first player card in the free corner left of level III (decision of the publisher, 18/11/2026).
  * In solo, Imhotep's pyramid takes the second seat.
+ * The player who looks at the table has their hand in the free space left of the pyramids, away from their pyramid;
+ * the other hands are only a count of cards, in the free corner right of level III (decisions of the publisher, 18/11/2026).
  * Nothing is ever rotated except the quarry, shown upright like in the rulebook.
  */
 
@@ -57,12 +59,10 @@ export const objectivesGap = objectivePitch
 // ------------------------------------------------------------------ players, under the shared area
 
 const playersTop = sharedHeight + areaGap
-/** A pyramid of 3 levels and the hand under it. */
+/** A pyramid of 3 levels. */
 const playerAreaWidth = 3 * cardWidth + 2 * cardGap
 const levelPitch = cardHeight + cardGap
-const handGapY = 0.8
-/** A pyramid and its hand are taller than Imhotep's pyramid of 4 levels. */
-const playerAreaHeight = 3 * levelPitch + handGapY + cardHeight
+const pyramidHeight = (levels: number) => levels * levelPitch - cardGap
 /** Imhotep's pyramid has 4 levels (4, 3, 2 and 1 cards). */
 const imhotepAreaWidth = 4 * cardWidth + 3 * cardGap
 /** The players are in rows of 2 (decision of the publisher, 18/11/2026). */
@@ -77,6 +77,8 @@ export const getSeat = (rules: Rules, player: number, me?: number) => {
 
 const isSolo = (rules: Rules) => rules.players.length === 1
 const rowCount = (rules: Rules) => Math.ceil(rules.players.length / seatsPerRow)
+/** A row of players is as tall as a pyramid of 3 levels, or as Imhotep's in solo. */
+const rowHeight = (rules: Rules) => pyramidHeight(isSolo(rules) ? 4 : 3)
 
 /** The width of the widest row of players: in solo, the player and Imhotep. */
 const playersWidth = (rules: Rules) => {
@@ -87,11 +89,11 @@ const playersWidth = (rules: Rules) => {
 
 /** Center and top of the area of the player at this seat. A row with a single player is centered. */
 const seatSpot = (rules: Rules, seat: number): XYCoordinates => {
-  const top = playersTop + Math.floor(seat / seatsPerRow) * (playerAreaHeight + areaGap)
-  if (isSolo(rules)) return { x: -playersWidth(rules) / 2 + playerAreaWidth / 2, y: top }
   const row = Math.floor(seat / seatsPerRow)
+  const top = playersTop + row * (rowHeight(rules) + areaGap)
+  if (isSolo(rules)) return { x: -playersWidth(rules) / 2 + playerAreaWidth / 2, y: top }
   const seatsInRow = Math.min(seatsPerRow, rules.players.length - row * seatsPerRow)
-  return { x: (seat % seatsPerRow - (seatsInRow - 1) / 2) * (playerAreaWidth + areaGap), y: top }
+  return { x: ((seat % seatsPerRow) - (seatsInRow - 1) / 2) * (playerAreaWidth + areaGap), y: top }
 }
 
 /** A card of a pyramid of `levels` levels: y = level (0 for the base), x = position in the level from the left. */
@@ -109,22 +111,37 @@ export const playerPyramidSpot = (rules: Rules, player: number, me: number | und
 export const imhotepPyramidSpot = (rules: Rules, x: number, y: number) =>
   pyramidSpot({ x: playersWidth(rules) / 2 - imhotepAreaWidth / 2, y: playersTop }, 4, x, y)
 
-/** Up to 4 cards in hand, overlapping, as wide as the pyramid. */
-export const handGap = (playerAreaWidth - cardWidth) / 3
-export const handSpot = (rules: Rules, player: number, me?: number): XYCoordinates => {
-  const area = playerArea(rules, player, me)
-  return { x: area.x - playerAreaWidth / 2 + cardWidth / 2, y: area.y + 3 * levelPitch + handGapY + cardHeight / 2 }
+/** The free corners left and right of level III of a player's pyramid. */
+const levelIIICorner = (rules: Rules, player: number, me: number | undefined, side: -1 | 1): XYCoordinates => {
+  const top = playerPyramidSpot(rules, player, me, 0, 2)
+  return { x: top.x + side * cardPitch, y: top.y }
 }
 
 /** The first player card, in the free corner left of level III. */
-export const firstPlayerSpot = (rules: Rules, player: number, me?: number): XYCoordinates => {
-  const top = playerPyramidSpot(rules, player, me, 0, 2)
-  return { x: top.x - cardPitch, y: top.y }
+export const firstPlayerSpot = (rules: Rules, player: number, me?: number) => levelIIICorner(rules, player, me, -1)
+
+/** The count of cards in the hand of another player, in the free corner right of level III. */
+export const handCountSpot = (rules: Rules, player: number, me?: number) => levelIIICorner(rules, player, me, 1)
+export const handCountWidth = cardWidth
+export const handCountHeight = 2.5
+
+/** The free space left of the players, under the cursed discards. */
+const handZone = (rules: Rules) => {
+  const left = sharedLeft
+  const right = -playersWidth(rules) / 2 - areaGap
+  return { left, right, width: right - left }
 }
+
+/** The hand of the player who looks at the table: up to 4 cards side by side, overlapping if needed, left of the pyramids. */
+export const myHandGap = (rules: Rules) => Math.min(cardPitch, (handZone(rules).width - cardWidth) / 3)
+export const myHandSpot = (rules: Rules): XYCoordinates => ({
+  x: handZone(rules).left + cardWidth / 2,
+  y: playersTop + cardHeight / 2
+})
 
 /** The table, as small as possible, with a margin of 2 mm. */
 export const tableBoundaries = (rules: Rules) => {
   const halfWidth = Math.max(sharedWidth, playersWidth(rules)) / 2 + 0.2
   const rows = rowCount(rules)
-  return { xMin: -halfWidth, xMax: halfWidth, yMin: -0.2, yMax: playersTop + rows * playerAreaHeight + (rows - 1) * areaGap + 0.2 }
+  return { xMin: -halfWidth, xMax: halfWidth, yMin: -0.2, yMax: playersTop + rows * rowHeight(rules) + (rows - 1) * areaGap + 0.2 }
 }

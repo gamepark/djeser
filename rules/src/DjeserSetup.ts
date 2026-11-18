@@ -23,7 +23,7 @@ export class DjeserSetup extends MaterialGameSetup<number, MaterialType, Locatio
   setupMaterial(options: DjeserOptions) {
     this.setupQuarry()
     this.setupNile()
-    this.setupCursedDiscards(options)
+    this.setupCursedDiscards()
     this.setupCommonObjectives(options)
     this.setupFirstPlayer()
   }
@@ -51,16 +51,14 @@ export class DjeserSetup extends MaterialGameSetup<number, MaterialType, Locatio
 
   /**
    * 5 - Place the 2 cursed discard cards at the beginning of the alignment.
-   * Tip: for a first game, leave the 2 discard piles empty; once familiar with the game, draw and place a Stone card in each of them.
-   * Solo: "You must place a card from the quarry in each cursed discard pile."
+   * A Stone card is always placed in each of them: the tip of the rulebook to leave them empty for a first game is not offered
+   * (decision of the publisher, 18/11/2026). Solo: "You must place a card from the quarry in each cursed discard pile."
    */
-  setupCursedDiscards(options: DjeserOptions) {
+  setupCursedDiscards() {
     const curses = [CurseType.Color, CurseType.Value]
     this.material(MaterialType.CursedDiscardCard).createItems(curses.map((id) => ({ id, location: { type: LocationType.CursedDiscardSpot, id } })))
-    if (options.players === 1 || (options.filledDiscards ?? true)) {
-      for (const curse of curses) {
-        this.quarry.dealOne({ type: LocationType.CursedDiscard, id: curse })
-      }
+    for (const curse of curses) {
+      this.quarry.dealOne({ type: LocationType.CursedDiscard, id: curse })
     }
   }
 

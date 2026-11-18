@@ -27,22 +27,16 @@ describe('Setup', () => {
         .map((card) => card.location.x)
         .sort()
     ).toEqual([0, 1, 2, 3, 4, 5])
-    const discarded = rules.material(MaterialType.StoneCard).location(LocationType.CursedDiscard).length
-    expect(rules.material(MaterialType.StoneCard).location(LocationType.Quarry).length).toBe(50 - NILE_SIZE - discarded)
+    expect(rules.material(MaterialType.StoneCard).location(LocationType.Quarry).length).toBe(50 - NILE_SIZE - 2)
     expect(rules.material(MaterialType.StoneCard).location(LocationType.PlayerHand).length).toBe(0)
   })
 
-  it('places a Stone card in each cursed discard pile, unless the option leaves them empty', () => {
-    const filled = setup({ players: 3, filledDiscards: true })
+  it.each([1, 2, 3, 4])('places a Stone card in each cursed discard pile, with %i players', (players) => {
+    const rules = setup({ players })
     for (const curse of [CurseType.Value, CurseType.Color]) {
-      expect(filled.material(MaterialType.CursedDiscardCard).location(LocationType.CursedDiscardSpot).id(curse).length).toBe(1)
-      expect(filled.material(MaterialType.StoneCard).location(LocationType.CursedDiscard).locationId(curse).length).toBe(1)
+      expect(rules.material(MaterialType.CursedDiscardCard).location(LocationType.CursedDiscardSpot).id(curse).length).toBe(1)
+      expect(rules.material(MaterialType.StoneCard).location(LocationType.CursedDiscard).locationId(curse).length).toBe(1)
     }
-    expect(setup({ players: 3, filledDiscards: false }).material(MaterialType.StoneCard).location(LocationType.CursedDiscard).length).toBe(0)
-  })
-
-  it('always fills the cursed discard piles in solo', () => {
-    expect(setup({ players: 1 }).material(MaterialType.StoneCard).location(LocationType.CursedDiscard).length).toBe(2)
   })
 
   it('draws one Common Objective card of each type, unless the option plays without them', () => {

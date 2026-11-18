@@ -1,14 +1,16 @@
 import { LocationType } from '@gamepark/djeser/material/LocationType'
 import { MaterialType } from '@gamepark/djeser/material/MaterialType'
-import { DeckLocator, ListLocator, Locator, MaterialContext } from '@gamepark/react-game'
-import { Location } from '@gamepark/rules-api'
+import { DeckLocator, ItemContext, ListLocator, Locator, MaterialContext } from '@gamepark/react-game'
+import { Location, MaterialItem } from '@gamepark/rules-api'
+import { HandCountDescription } from './HandCountDescription'
 import {
   curseCardSpot,
   cursedDiscardSpot,
   firstPlayerSpot,
-  handGap,
-  handSpot,
+  handCountSpot,
   imhotepPyramidSpot,
+  myHandGap,
+  myHandSpot,
   nileCardSpot,
   nileStoneSpot,
   objectivesGap,
@@ -61,11 +63,27 @@ class FirstPlayerSpotLocator extends Locator<number, MaterialType, LocationType>
   }
 }
 
+/**
+ * The hand of the player who looks at the table is shown left of the pyramids.
+ * The other hands are only a count of cards: their cards are not displayed, except while they move.
+ */
 class PlayerHandLocator extends ListLocator<number, MaterialType, LocationType> {
-  gap = { x: handGap }
+  locationDescription = new HandCountDescription()
+
+  getLocations(context: Context) {
+    return context.rules.players.filter((player) => player !== context.player).map((player) => ({ type: LocationType.PlayerHand, player }))
+  }
 
   getCoordinates(location: Loc, context: Context) {
-    return handSpot(context.rules, location.player!, context.player)
+    return location.player === context.player ? myHandSpot(context.rules) : handCountSpot(context.rules, location.player!, context.player)
+  }
+
+  getGap(location: Loc, context: Context) {
+    return { x: location.player === context.player ? myHandGap(context.rules) : 0 }
+  }
+
+  hide(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    return item.location.player !== context.player
   }
 }
 
