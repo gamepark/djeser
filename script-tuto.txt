@@ -1,0 +1,112 @@
+Code le tutoriel de Djeser.
+Partie à 2 joueurs : le joueur contre Laurent (l'auteur, Laurent Prin), avec un avatar.
+Le joueur est le premier joueur. Cartes Objectif Commun en jeu.
+Fais une distribution aléatoire, sauf pour les cartes nécessaires au scénario des tours 1 à 3 :
+- défausse maudite des couleurs : une carte violette ; défausse maudite des valeurs : un 4 ;
+- Nil, depuis les défausses : jaune 3, violet 2, vert 5, bleu 1, rouge 4, vert 2 ;
+- dessus de la carrière : rouge 7 (pioché par Laurent au tour 1), puis ce qu'il faut pour que le Nil reste jouable.
+Objectifs : type 1 « Avoir autant de cartes de valeur paire que de cartes de valeur impaire », type 2 « Avoir 3 couleurs maximum »,
+type 3 « Avoir au moins 2 cartes jaunes ».
+Laurent joue les coups indiqués aux tours 1 et 2, puis le bot.
+Améliore les textes ci-dessous à partir des règles, et ajoute du gras et des icônes.
+
+Bienvenue dans le tutoriel de Djeser !
+
+2680 avant J.-C., le pharaon Djeser veut ériger la pyramide à degrés de Saqqarah.
+Son architecte Imhotep cherche le plus grand architecte d'Égypte : prouvez votre valeur !
+
+Votre but : construire une **pyramide de 6 cartes Pierre** qui rapporte le plus de **points de Prestige**.
+(focus sur l'emplacement de la pyramide du joueur)
+
+Voici les cartes Pierre : 5 couleurs, valeurs de 0 à 9.
+(focus sur les 6 cartes Pierre du Nil)
+
+Elles arrivent de la carrière par le Nil.
+(focus sur la carrière et les 7 cartes Nil)
+
+À votre tour, vous avez **3 PA** (points d'action) à dépenser, au moins 1.
+Trois actions possibles : **collecter**, **poser** ou **défausser** une carte Pierre. Vous pouvez faire plusieurs fois la même action.
+
+Collecter une carte Pierre coûte le nombre de blocs dessinés sur la barque au-dessus d'elle : 1, 2 ou 3 PA.
+Piocher la carte cachée de la carrière coûte 3 PA.
+(focus sur les cartes Nil)
+
+Collectez le **3 jaune** pour 1 PA : cliquez dessus.
+(le joueur collecte le jaune 3)
+
+La carte va dans votre main. Attention : jamais **plus de 4 cartes** en main.
+
+Posez maintenant le 3 jaune dans votre pyramide : glissez-le sur un emplacement du **niveau I**.
+Poser coûte **1 PA au niveau I**, 2 PA au niveau II, 3 PA au niveau III.
+(le joueur pose le jaune 3 au niveau I, n'importe quelle position)
+
+Il vous reste 1 PA. Collectez le **5 vert** ? Impossible : la barque au-dessus de lui coûte 2 PA.
+(focus sur le vert 5 et sa carte Nil)
+
+Regardez ces deux défausses : ce sont les **défausses maudites**.
+La carte du dessus de chacune est maudite, et maudit aussi toutes les cartes de même **valeur** (à droite) ou de même **couleur** (à gauche).
+(focus sur les 2 défausses maudites)
+
+Une carte maudite ne peut **ni être collectée sur le Nil, ni être posée** dans une pyramide.
+Ici, le violet et le 4 sont maudits : le **2 violet** et le **4 rouge** sont décalés vers le bas sur le Nil.
+(focus sur le violet 2 et le rouge 4)
+
+Terminez votre tour.
+(le joueur clique sur « Terminer mon tour »)
+
+Vous avez collecté une carte sur le Nil : pas de défausse en fin de tour.
+Toutes les cartes du Nil glissent vers les défausses, et la carrière remplit l'emplacement vide.
+(animation du Nil)
+
+Laurent pioche une carte dans la carrière, puis termine son tour.
+(Laurent pioche le rouge 7, termine son tour)
+
+Laurent n'a collecté aucune carte sur le Nil : il doit **défausser la 1re carte du Nil** dans la défausse maudite de son choix.
+Il choisit la défausse des valeurs : le 5 devient maudit !
+(Laurent défausse la 1re carte du Nil, un 5, dans la défausse des valeurs)
+
+À vous. Collectez le **2 vert** puis le **1 bleu**.
+(le joueur collecte les 2 cartes ; le scénario règle le Nil pour que cela coûte 3 PA au total)
+
+Posez-les au niveau I au prochain tour : vous n'avez plus de PA. Terminez votre tour.
+(le joueur termine son tour ; Laurent joue son tour 2 au bot)
+
+Posez le 2 vert et le 1 bleu au niveau I, **de part et d'autre** ou à côté de votre 3 jaune.
+Le niveau I peut avoir un trou entre 2 cartes, pour y poser une 3e carte plus tard.
+(le joueur pose les 2 cartes au niveau I : 2 PA)
+
+À partir du **niveau II**, une carte doit reposer sur **2 cartes du niveau inférieur**, ses soutiens.
+Sa valeur doit être égale à la **somme** ou à la **différence** des valeurs de ses 2 soutiens.
+(focus sur 2 cartes voisines du niveau I)
+
+Par exemple, sur un 3 et un 2, vous pouvez poser un **5** (3+2) ou un **1** (3-2).
+Quand vous glissez une carte, seuls les emplacements autorisés s'allument.
+
+Pour votre dernier PA, défaussez une carte Pierre de votre main… vous n'en avez plus ! Terminez votre tour.
+(le joueur termine son tour avec 1 PA non dépensé)
+
+Vous n'avez rien collecté sur le Nil ce tour-ci : défaussez la 1re carte du Nil.
+Choisissez la défausse : changer la valeur ou la couleur maudite peut gêner Laurent… ou vous aider !
+(le joueur choisit une défausse)
+
+Défausser coûte **1 PA depuis la main**, **2 PA depuis le niveau I**, **3 PA depuis le niveau II**, à condition que la carte ne soit soutien d'aucune autre.
+La carte du niveau III ne peut pas être défaussée.
+(focus sur la pyramide)
+
+Voici les cartes **Objectif Commun**. Chacune réalisée par votre pyramide rapporte **3 points de Prestige**.
+Tous les joueurs peuvent les réaliser.
+(focus sur les 3 cartes Objectif Commun)
+
+Poser une carte au **niveau III** déclenche la fin de partie : chacun joue encore un tour jusqu'à revenir au premier joueur.
+(focus sur l'emplacement du niveau III)
+
+En fin de partie, vous marquez :
+- **1 point** par carte posée dans votre pyramide ;
+- la **valeur** de la carte du niveau III ;
+- **3 points** par carte Objectif Commun réalisée ;
+- **moins** la valeur des cartes restées en main.
+En cas d'égalité, la pyramide dont la somme des valeurs est la plus élevée l'emporte.
+
+À vous de terminer la partie contre Laurent !
+*À tout moment, cliquez sur une carte pour voir son aide.*
+(fin du tutoriel scénarisé, Laurent joue au bot)
