@@ -16,6 +16,11 @@ import {
   stoneImages
 } from '../images/Images'
 import { cardBorderRadius, cardHeight, cardWidth } from '../locators/TableLayout'
+import { CommonObjectiveCardHelp } from './help/CommonObjectiveCardHelp'
+import { CursedDiscardCardHelp } from './help/CursedDiscardCardHelp'
+import { FirstPlayerCardHelp } from './help/FirstPlayerCardHelp'
+import { NileCardHelp } from './help/NileCardHelp'
+import { StoneCardHelp } from './help/StoneCardHelp'
 
 /** A card lying in landscape: Stone, Nile and first player cards. */
 abstract class LandscapeCardDescription<Id> extends CardDescription<number, MaterialType, LocationType, Id> {
@@ -34,6 +39,7 @@ abstract class PortraitCardDescription<Id> extends CardDescription<number, Mater
 class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
   images = stoneImages
   backImage = StoneBack
+  help = StoneCardHelp
 
   /**
    * A Stone card of the Nile or the quarry can only go to the hand: a click collects it. Placing and discarding are dragged.
@@ -49,19 +55,23 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
 
 class NileCardDescription extends LandscapeCardDescription<NileCard> {
   images = nileImages
+  help = NileCardHelp
 }
 
 class CommonObjectiveCardDescription extends PortraitCardDescription<CommonObjective> {
   images = objectiveImages
   backImages = objectiveBackImages
+  help = CommonObjectiveCardHelp
 }
 
 class CursedDiscardCardDescription extends PortraitCardDescription<CurseType> {
   images = curseImages
+  help = CursedDiscardCardHelp
 }
 
 class FirstPlayerCardDescription extends LandscapeCardDescription<undefined> {
   image = FirstPlayerCard
+  help = FirstPlayerCardHelp
 }
 
 export const Material: Partial<Record<MaterialType, MaterialDescription>> = {
