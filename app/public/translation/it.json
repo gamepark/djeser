@@ -98,5 +98,6 @@
   "tuto.objectives": "Ecco le carte <bold>Obiettivo Comune</bold>. Ognuna realizzata dalla tua piramide vale <bold>3 punti Prestigio</bold>. Tutti i giocatori possono realizzarle.",
   "tuto.end": "Posare una carta al <bold>livello III</bold> fa scattare la fine della partita: ognuno gioca ancora un turno fino a tornare al primo giocatore.",
   "tuto.scoring": "A fine partita segni:\n• <bold>1 punto</bold> per ogni carta posata nella tua piramide\n• il <bold>valore</bold> della carta del livello III\n• <bold>3 punti</bold> per ogni carta Obiettivo Comune realizzata\n• <bold>meno</bold> il valore delle carte rimaste in mano\nIn caso di parità, vince la piramide con la somma dei valori più alta.",
-  "tuto.go": "Ora tocca a te finire la partita contro Laurent!\n<italic>In qualsiasi momento, clicca su una carta per vederne l’aiuto.</italic>"
+  "tuto.go": "Ora tocca a te finire la partita contro Laurent!\n<italic>In qualsiasi momento, clicca su una carta per vederne l’aiuto.</italic>",
+  "imhotep": "Imhotep"
 }

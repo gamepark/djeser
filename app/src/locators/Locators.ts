@@ -6,6 +6,7 @@ import { Location, MaterialItem } from '@gamepark/rules-api'
 import { GameState } from '@gamepark/djeser/rules/GameState'
 import { cardHoverTransform } from './CardHover'
 import { HandCountDescription } from './HandCountDescription'
+import { ImhotepNameDescription } from './ImhotepNameDescription'
 import {
   cardBorderRadius,
   cardHeight,
@@ -15,6 +16,7 @@ import {
   cursedDiscardSpot,
   firstPlayerSpot,
   handCountSpot,
+  imhotepNameSpot,
   imhotepPyramidSpot,
   myHandGap,
   myHandSpot,
@@ -143,9 +145,17 @@ class PyramidLocator extends Locator<number, MaterialType, LocationType> {
   }
 }
 
+/** Imhotep's pyramid, in solo. The location without coordinates is his name, above the top of the pyramid. */
 class ImhotepPyramidLocator extends Locator<number, MaterialType, LocationType> {
+  locationDescription = new ImhotepNameDescription()
+
+  getLocations(context: Context) {
+    return context.rules.players.length === 1 ? [{ type: LocationType.ImhotepPyramid }] : []
+  }
+
   getCoordinates(location: Loc, context: Context) {
-    return imhotepPyramidSpot(context.rules, location.x ?? 0, location.y ?? 0)
+    if (location.x === undefined) return imhotepNameSpot(context.rules)
+    return imhotepPyramidSpot(context.rules, location.x, location.y ?? 0)
   }
 
   getHoverTransform(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {

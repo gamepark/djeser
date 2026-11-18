@@ -98,5 +98,6 @@
   "tuto.objectives": "Voici les cartes <bold>Objectif Commun</bold>. Chacune réalisée par votre pyramide rapporte <bold>3 points de Prestige</bold>. Tous les joueurs peuvent les réaliser.",
   "tuto.end": "Poser une carte au <bold>niveau III</bold> déclenche la fin de partie : chacun joue encore un tour jusqu’à revenir au premier joueur.",
   "tuto.scoring": "En fin de partie, vous marquez :\n• <bold>1 point</bold> par carte posée dans votre pyramide\n• la <bold>valeur</bold> de la carte du niveau III\n• <bold>3 points</bold> par carte Objectif Commun réalisée\n• <bold>moins</bold> la valeur des cartes restées en main\nEn cas d’égalité, la pyramide dont la somme des valeurs est la plus élevée l’emporte.",
-  "tuto.go": "À vous de terminer la partie contre Laurent !\n<italic>À tout moment, cliquez sur une carte pour voir son aide.</italic>"
+  "tuto.go": "À vous de terminer la partie contre Laurent !\n<italic>À tout moment, cliquez sur une carte pour voir son aide.</italic>",
+  "imhotep": "Imhotep"
 }

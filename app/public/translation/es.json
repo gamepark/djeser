@@ -98,5 +98,6 @@
   "tuto.objectives": "Estas son las cartas <bold>Objetivo Común</bold>. Cada una que cumpla tu pirámide da <bold>3 puntos de Prestigio</bold>. Todos los jugadores pueden cumplirlas.",
   "tuto.end": "Colocar una carta en el <bold>nivel III</bold> desencadena el final de la partida: cada uno juega un turno más hasta volver al jugador inicial.",
   "tuto.scoring": "Al final de la partida, sumas:\n• <bold>1 punto</bold> por carta colocada en tu pirámide\n• el <bold>valor</bold> de la carta del nivel III\n• <bold>3 puntos</bold> por carta Objetivo Común cumplida\n• <bold>menos</bold> el valor de las cartas que te queden en la mano\nEn caso de empate, gana la pirámide cuya suma de valores sea mayor.",
-  "tuto.go": "¡Ahora te toca terminar la partida contra Laurent!\n<italic>En cualquier momento, haz clic en una carta para ver su ayuda.</italic>"
+  "tuto.go": "¡Ahora te toca terminar la partida contra Laurent!\n<italic>En cualquier momento, haz clic en una carta para ver su ayuda.</italic>",
+  "imhotep": "Imhotep"
 }

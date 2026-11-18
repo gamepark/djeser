@@ -98,5 +98,6 @@
   "tuto.objectives": "These are the <bold>Common Objective</bold> cards. Each one completed by your pyramid earns <bold>3 Prestige points</bold>. All players can complete them.",
   "tuto.end": "Placing a card at <bold>level III</bold> triggers the end of the game: each player takes one more turn until it returns to the first player.",
   "tuto.scoring": "At the end of the game, you score:\n• <bold>1 point</bold> for each card placed in your pyramid\n• the <bold>value</bold> of the card at level III\n• <bold>3 points</bold> for each Common Objective card completed\n• <bold>minus</bold> the value of the cards still in hand\nIn case of a tie, the pyramid with the highest sum of values wins.",
-  "tuto.go": "Now finish the game against Laurent!\n<italic>At any time, click on a card to see its help.</italic>"
+  "tuto.go": "Now finish the game against Laurent!\n<italic>At any time, click on a card to see its help.</italic>",
+  "imhotep": "Imhotep"
 }

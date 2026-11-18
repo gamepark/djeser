@@ -98,5 +98,6 @@
   "tuto.objectives": "Das sind die <bold>Gemeinschaftszielkarten</bold>. Jede, die deine Pyramide erfüllt, bringt <bold>3 Prestigepunkte</bold>. Alle Spieler können sie erfüllen.",
   "tuto.end": "Eine Karte auf <bold>Ebene III</bold> zu legen löst das Spielende aus: Alle spielen noch einen Zug, bis der Startspieler wieder an der Reihe wäre.",
   "tuto.scoring": "Am Spielende erhältst du:\n• <bold>1 Punkt</bold> pro Karte in deiner Pyramide\n• den <bold>Wert</bold> der Karte auf Ebene III\n• <bold>3 Punkte</bold> pro erfüllter Gemeinschaftszielkarte\n• <bold>abzüglich</bold> des Werts der Karten, die noch auf deiner Hand sind\nBei Gleichstand gewinnt die Pyramide mit der höchsten Summe der Werte.",
-  "tuto.go": "Jetzt spiel die Partie gegen Laurent zu Ende!\n<italic>Klick jederzeit auf eine Karte, um ihre Hilfe zu sehen.</italic>"
+  "tuto.go": "Jetzt spiel die Partie gegen Laurent zu Ende!\n<italic>Klick jederzeit auf eine Karte, um ihre Hilfe zu sehen.</italic>",
+  "imhotep": "Imhotep"
 }

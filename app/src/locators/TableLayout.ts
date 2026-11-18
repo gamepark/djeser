@@ -116,6 +116,11 @@ export const playerPyramidSpot = (rules: Rules, player: number, me: number | und
 export const imhotepPyramidSpot = (rules: Rules, x: number, y: number) =>
   pyramidSpot({ x: playersWidth(rules) / 2 - imhotepAreaWidth / 2, y: playersTop }, 4, x, y)
 
+/** Imhotep's name, in the free space above the top of his pyramid (request of the publisher, 18/11/2026). */
+export const imhotepNameHeight = 1.6
+export const imhotepNameWidth = cardWidth * 2
+export const imhotepNameSpot = (rules: Rules): XYCoordinates => ({ x: imhotepPyramidSpot(rules, 0, 3).x, y: playersTop - areaGap / 2 })
+
 /** The free corners left and right of level III of a player's pyramid. */
 const levelIIICorner = (rules: Rules, player: number, me: number | undefined, side: -1 | 1): XYCoordinates => {
   const top = playerPyramidSpot(rules, player, me, 0, 2)
