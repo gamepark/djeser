@@ -8,11 +8,9 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { nileCards } from './material/NileCard'
 import { stoneCards } from './material/StoneCard'
+import { NILE_SIZE } from './rules/GameState'
 import { RuleId } from './rules/RuleId'
 import { SoloDifficulty } from './SoloDifficulty'
-
-/** Number of Stone cards on the Nile. */
-export const NILE_SIZE = 6
 
 /**
  * This class creates a new Game based on the game options
@@ -91,6 +89,6 @@ export class DjeserSetup extends MaterialGameSetup<number, MaterialType, Locatio
   }
 
   start() {
-    this.startPlayerTurn(RuleId.TheFirstStep, this.players[0])
+    this.startPlayerTurn(RuleId.PlayerTurn, this.players[0])
   }
 }

@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { DjeserOptions } from './DjeserOptions'
 import { DjeserRules } from './DjeserRules'
-import { DjeserSetup, NILE_SIZE } from './DjeserSetup'
+import { DjeserSetup } from './DjeserSetup'
 import { getCommonObjectiveType } from './material/CommonObjective'
 import { CurseType } from './material/CurseType'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { stoneCards } from './material/StoneCard'
+import { NILE_SIZE } from './rules/GameState'
 import { SoloDifficulty } from './SoloDifficulty'
 
 const setup = (options: DjeserOptions) => new DjeserRules(new DjeserSetup().setup(options))

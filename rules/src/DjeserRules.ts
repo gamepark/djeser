@@ -1,4 +1,5 @@
 import {
+  CompetitiveScore,
   FillGapStrategy,
   hideItemId,
   hideItemIdToOthers,
@@ -10,8 +11,15 @@ import {
 } from '@gamepark/rules-api'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
+import { pyramidValue } from './material/Pyramid'
+import { EndOfTurnDiscardRule } from './rules/EndOfTurnDiscardRule'
+import { EndOfTurnRule } from './rules/EndOfTurnRule'
+import { GameState } from './rules/GameState'
+import { PlayerTurnRule } from './rules/PlayerTurnRule'
 import { RuleId } from './rules/RuleId'
-import { TheFirstStepRule } from './rules/TheFirstStepRule'
+
+type Game = MaterialGame<number, MaterialType, LocationType, RuleId>
+type Move = MaterialMove<number, MaterialType, LocationType, RuleId>
 
 /**
  * This class implements the rules of the board game.
@@ -19,10 +27,12 @@ import { TheFirstStepRule } from './rules/TheFirstStepRule'
  */
 export class DjeserRules
   extends SecretMaterialRules<number, MaterialType, LocationType, RuleId>
-  implements TimeLimit<MaterialGame<number, MaterialType, LocationType, RuleId>, MaterialMove<number, MaterialType, LocationType, RuleId>, number>
+  implements TimeLimit<Game, Move, number>, CompetitiveScore<Game, Move, number>
 {
   rules = {
-    [RuleId.TheFirstStep]: TheFirstStepRule
+    [RuleId.PlayerTurn]: PlayerTurnRule,
+    [RuleId.EndOfTurnDiscard]: EndOfTurnDiscardRule,
+    [RuleId.EndOfTurn]: EndOfTurnRule
   }
 
   locationsStrategies = {
@@ -49,7 +59,24 @@ export class DjeserRules
     }
   }
 
+  /** The main decision of a turn, then about 10 seconds to choose a cursed discard pile at the end of the turn. */
   giveTime(): number {
-    return 60
+    return this.game.rule?.id === RuleId.EndOfTurnDiscard ? 10 : 45
+  }
+
+  /**
+   * The Prestige points. In solo, the player scores their points only if they win, 0 otherwise
+   * (decision of the publisher, 18/11/2026).
+   */
+  getScore(player: number) {
+    const state = new GameState(this.game)
+    if (this.game.players.length === 1 && !state.isSoloWon(player)) return 0
+    return state.playerScore(player)
+  }
+
+  /** "In case of a tie, the player with the highest sum of the values of their Stone cards wins": the cards of the pyramid only (decision H10). */
+  getTieBreaker(tieBreaker: number, player: number) {
+    if (tieBreaker !== 1) return undefined
+    return pyramidValue(new GameState(this.game).pyramidCards(player))
   }
 }

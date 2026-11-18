@@ -1,7 +1,9 @@
 import { RuleId } from '@gamepark/djeser/rules/RuleId'
 import { ComponentType } from 'react'
-import { TheFirstStepHeader } from './TheFirstStepHeader'
+import { TemporaryHeader } from './TemporaryHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
-  [RuleId.TheFirstStep]: TheFirstStepHeader
+  [RuleId.PlayerTurn]: TemporaryHeader,
+  [RuleId.EndOfTurnDiscard]: TemporaryHeader,
+  [RuleId.EndOfTurn]: TemporaryHeader
 }
