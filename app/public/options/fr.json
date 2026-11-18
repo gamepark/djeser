@@ -1,7 +1,15 @@
 {
-  "identities": "Couleur",
-  "identities.1": "Bleu",
-  "identities.2": "Rouge",
-  "identities.3": "Vert",
-  "identities.4": "Jaune"
+  "option.filledDiscards": "Défausses maudites garnies au départ",
+  "option.filledDiscards.help": "Une carte Pierre est placée dans chaque défausse maudite pendant la mise en place. Pour une première partie, la règle conseille de les laisser vides.",
+  "option.commonObjectives": "Cartes Objectif Commun",
+  "option.commonObjectives.help": "Une carte Objectif Commun de chaque type est mise en jeu. Pour une première partie, la règle conseille de jouer sans.",
+  "option.soloDifficulty": "Difficulté",
+  "option.soloDifficulty.0": "Découverte",
+  "option.soloDifficulty.0.help": "Sans carte Objectif Commun.",
+  "option.soloDifficulty.1": "Facile",
+  "option.soloDifficulty.1.help": "1 carte Objectif Commun, que vous devez réaliser pour gagner.",
+  "option.soloDifficulty.2": "Difficile",
+  "option.soloDifficulty.2.help": "2 cartes Objectif Commun de types différents, que vous devez réaliser pour gagner.",
+  "option.soloDifficulty.3": "Très difficile",
+  "option.soloDifficulty.3.help": "3 cartes Objectif Commun, une de chaque type, que vous devez réaliser pour gagner."
 }

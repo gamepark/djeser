@@ -1,38 +1,32 @@
 import { getEnumValues, OptionsSpecV2 } from '@gamepark/rules-api'
-import { PlayerColor } from './PlayerColor'
-
-/**
- * This is the options for each player in the game.
- */
-type PlayerOptions = { id: PlayerColor }
+import { SoloDifficulty } from './SoloDifficulty'
 
 /**
  * This is the type of object that the game receives when a new game is started.
- * The first generic parameter, "{}", can be changed to include game options like variants or expansions.
+ * An option is absent when it is not offered at that player count.
  */
 export type DjeserOptions = {
-  players: PlayerOptions[]
+  players: number
+  /** 2 to 4 players: a Stone card is placed in each cursed discard pile during the setup (the rulebook leaves them empty for a first game). */
+  filledDiscards?: boolean
+  /** 2 to 4 players: play with one Common Objective card of each type (the rulebook plays without them for a first game). */
+  commonObjectives?: boolean
+  /** Solo: the number of Common Objective cards the player must complete. */
+  soloDifficulty?: SoloDifficulty
 }
 
 /**
  * The structure of everything a host can choose before the game starts — and nothing else.
- *
- * Two things are deliberately absent, both because they change without the game changing:
- *
- * - **Text.** No labels, no help. They live in `app/public/options/<locale>.json`, published beside the
- *   game's translations and keyed by convention: `option.<option>`, `option.<option>.<value>`,
- *   `identities.<value>`, plus optional `.help` variants. See the files in that folder.
- * - **Subscription and competitive gates.** Which options require a subscription, and which are allowed
- *   in ranked play, are the platform's decisions. They live in its database and are edited there.
- *
- * The declaration is plain JSON on purpose: the platform snapshots it when the bundle is prepared, so
- * every screen reads the option space without downloading and running a game bundle.
- *
- * `players` must match the range declared for the game on the platform — it is the root that every other
- * range narrows, and a disagreement silently changes which tables exist.
+ * Texts live in `app/public/options/<locale>.json`.
+ * No player identities: the players are only numbered (decision of the publisher, 18/11/2026).
+ * The options are those of the former BGA adaptation (decision of the publisher, 18/11/2026).
  */
 export const DjeserOptionsSpecV2: OptionsSpecV2 = {
   specVersion: 2,
-  players: { min: 2, max: 4 },
-  identities: { values: getEnumValues(PlayerColor) }
+  players: { min: 1, max: 4 },
+  options: {
+    filledDiscards: { kind: 'boolean', playerCount: { min: 2 } },
+    commonObjectives: { kind: 'boolean', playerCount: { min: 2 } },
+    soloDifficulty: { kind: 'enum', values: getEnumValues(SoloDifficulty), playerCount: { max: 1 } }
+  }
 }
