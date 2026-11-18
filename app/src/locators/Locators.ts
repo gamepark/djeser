@@ -4,6 +4,7 @@ import { MaterialType } from '@gamepark/djeser/material/MaterialType'
 import { DeckLocator, DropAreaDescription, ItemContext, ListLocator, Locator, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 import { GameState } from '@gamepark/djeser/rules/GameState'
+import { cardHoverTransform } from './CardHover'
 import { HandCountDescription } from './HandCountDescription'
 import {
   cardBorderRadius,
@@ -51,11 +52,19 @@ class NileLocator extends Locator<number, MaterialType, LocationType> {
     const cursed = new GameState(context.rules.game).isCursed(item.id)
     return { x, y: cursed ? y + cursedNileShift : y }
   }
+
+  getHoverTransform(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    return cardHoverTransform(item, context)
+  }
 }
 
 class CursedDiscardSpotLocator extends Locator<number, MaterialType, LocationType> {
   getCoordinates(location: Loc) {
     return curseCardSpot(location.id)
+  }
+
+  getHoverTransform(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    return cardHoverTransform(item, context)
   }
 }
 
@@ -63,11 +72,19 @@ class CursedDiscardLocator extends DeckLocator<number, MaterialType, LocationTyp
   getCoordinates(location: Loc) {
     return cursedDiscardSpot(location.id)
   }
+
+  getHoverTransform(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    return cardHoverTransform(item, context)
+  }
 }
 
 class CommonObjectivesLocator extends ListLocator<number, MaterialType, LocationType> {
   coordinates = objectivesSpot
   gap = { x: objectivesGap }
+
+  getHoverTransform(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    return cardHoverTransform(item, context)
+  }
 }
 
 class FirstPlayerSpotLocator extends Locator<number, MaterialType, LocationType> {
@@ -98,6 +115,10 @@ class PlayerHandLocator extends ListLocator<number, MaterialType, LocationType> 
   hide(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
     return item.location.player !== context.player
   }
+
+  getHoverTransform(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    return cardHoverTransform(item, context)
+  }
 }
 
 /** A slot of a pyramid is the size of a card: it lights up when a card can be placed there, and the tutorial can focus it. */
@@ -116,11 +137,19 @@ class PyramidLocator extends Locator<number, MaterialType, LocationType> {
   getCoordinates(location: Loc, context: Context) {
     return playerPyramidSpot(context.rules, location.player!, context.player, location.x ?? 0, location.y ?? 0)
   }
+
+  getHoverTransform(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    return cardHoverTransform(item, context)
+  }
 }
 
 class ImhotepPyramidLocator extends Locator<number, MaterialType, LocationType> {
   getCoordinates(location: Loc, context: Context) {
     return imhotepPyramidSpot(context.rules, location.x ?? 0, location.y ?? 0)
+  }
+
+  getHoverTransform(item: MaterialItem<number, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+    return cardHoverTransform(item, context)
   }
 }
 
