@@ -1,3 +1,4 @@
+import { DjeserAI } from '@gamepark/djeser/ai/DjeserAI'
 import { DjeserOptionsSpecV2 } from '@gamepark/djeser/DjeserOptions'
 import { DjeserRules } from '@gamepark/djeser/DjeserRules'
 import { DjeserSetup } from '@gamepark/djeser/DjeserSetup'
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
       material={Material}
       locators={Locators}
       animations={gameAnimations}
+      ai={DjeserAI}
     >
       <App />
     </GameProvider>
