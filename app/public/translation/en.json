@@ -1,6 +1,7 @@
 {
   "header.turn.you.start": "You have 3 AP: collect, place or discard Stone cards",
   "header.turn.you": "You have {ap} AP left: collect, place or discard Stone cards, or <end>end your turn</end>",
+  "header.turn.you.left": "You have {ap} AP left: collect, place or discard Stone cards",
   "header.turn.you.done": "You have spent your 3 AP: <end>End my turn</end>",
   "header.turn.you.blocked": "No action possible: <end>End my turn</end>",
   "header.turn.player": "{player} is playing ({ap} AP left)",

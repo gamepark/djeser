@@ -1,6 +1,7 @@
 {
   "header.turn.you.start": "Du hast 3 AP: Steinkarten einsammeln, legen oder abwerfen",
   "header.turn.you": "Du hast noch {ap} AP: Steinkarten einsammeln, legen oder abwerfen, oder <end>Zug beenden</end>",
+  "header.turn.you.left": "Du hast noch {ap} AP: Steinkarten einsammeln, legen oder abwerfen",
   "header.turn.you.done": "Du hast deine 3 AP ausgegeben: <end>Zug beenden</end>",
   "header.turn.you.blocked": "Keine Aktion möglich: <end>Zug beenden</end>",
   "header.turn.player": "{player} ist am Zug (noch {ap} AP)",

@@ -1,6 +1,7 @@
 {
   "header.turn.you.start": "Hai 3 PA: raccogli, posa o scarta carte Pietra",
   "header.turn.you": "Ti restano {ap} PA: raccogli, posa o scarta carte Pietra, oppure <end>termina il tuo turno</end>",
+  "header.turn.you.left": "Ti restano {ap} PA: raccogli, posa o scarta carte Pietra",
   "header.turn.you.done": "Hai speso i tuoi 3 PA: <end>Termina il mio turno</end>",
   "header.turn.you.blocked": "Nessuna azione possibile: <end>Termina il mio turno</end>",
   "header.turn.player": "{player} sta giocando ({ap} PA rimasti)",

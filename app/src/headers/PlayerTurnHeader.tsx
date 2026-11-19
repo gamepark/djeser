@@ -22,5 +22,7 @@ export const PlayerTurnHeader = () => {
   if (ap === ACTION_POINTS) {
     return endTurn ? <Trans i18nKey="header.turn.you.blocked" components={{ end }} /> : <Trans i18nKey="header.turn.you.start" />
   }
+  // The tutorial does not always allow to end the turn: then the header does not offer it
+  if (!endTurn && ap > 0) return <Trans i18nKey="header.turn.you.left" values={{ ap }} />
   return <Trans i18nKey={ap === 0 ? 'header.turn.you.done' : 'header.turn.you'} values={{ ap }} components={{ end }} />
 }
