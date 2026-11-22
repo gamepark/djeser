@@ -23,19 +23,20 @@ import { CursedDiscardCardHelp } from './help/CursedDiscardCardHelp'
 import { FirstPlayerCardHelp } from './help/FirstPlayerCardHelp'
 import { NileCardHelp } from './help/NileCardHelp'
 import { StoneCardHelp } from './help/StoneCardHelp'
-import { ChooseSlotLabel } from './ChooseSlotLabel'
+import { ChooseDestinationLabel } from './ChooseDestinationLabel'
 
 type Context = ItemContext<number, MaterialType, LocationType>
 
 /**
- * The end of turn discard: the Stone card closest to the cursed discards leaves the Nile for the pile of this curse.
- * A click on the pile, or on its cursed discard card, plays it.
+ * A click on a cursed discard pile, or on its cursed discard card, discards there:
+ * - at the end of the turn, the Stone card of the Nile closest to the cursed discards;
+ * - during the turn, the card of the hand selected with a click.
  */
-const isNileDiscardTo = (move: MaterialMove<number, MaterialType, LocationType>, curse: CurseType, rules: MaterialRules) =>
-  isMoveItemType(MaterialType.StoneCard)(move) &&
-  move.location.type === LocationType.CursedDiscard &&
-  move.location.id === curse &&
-  rules.material(MaterialType.StoneCard).getItem(move.itemIndex).location.type === LocationType.Nile
+const isClickDiscardTo = (move: MaterialMove<number, MaterialType, LocationType>, curse: CurseType, rules: MaterialRules) => {
+  if (!isMoveItemType(MaterialType.StoneCard)(move) || move.location.type !== LocationType.CursedDiscard || move.location.id !== curse) return false
+  const item = rules.material(MaterialType.StoneCard).getItem(move.itemIndex)
+  return item.location.type === LocationType.Nile || (item.location.type === LocationType.PlayerHand && !!item.selected)
+}
 
 /** A card lying in landscape: Stone, Nile and first player cards. */
 abstract class LandscapeCardDescription<Id> extends CardDescription<number, MaterialType, LocationType, Id> {
@@ -58,14 +59,14 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
 
   /**
    * A Stone card of the Nile or the quarry can only go to the hand: a click collects it. Placing and discarding are dragged.
-   * A click anywhere on the quarry draws its top card. A click on the top card of a cursed discard pile discards the first Stone of the Nile there.
+   * A click anywhere on the quarry draws its top card. A click on the top card of a cursed discard pile discards there (see `isClickDiscardTo`).
    */
   canShortClick(move: MaterialMove<number, MaterialType, LocationType>, context: Context) {
     const stones = context.rules.material(MaterialType.StoneCard)
     const item = stones.getItem(context.index)
     if (item.location.type === LocationType.CursedDiscard) {
       const isTop = stones.location(LocationType.CursedDiscard).locationId(item.location.id).maxBy((pile) => pile.location.x!).getIndex() === context.index
-      return isTop && isNileDiscardTo(move, item.location.id as CurseType, context.rules)
+      return isTop && isClickDiscardTo(move, item.location.id as CurseType, context.rules)
     }
     if (!isMoveItemType(MaterialType.StoneCard)(move) || move.location.type !== LocationType.PlayerHand) return false
     if (move.itemIndex === context.index) return true
@@ -73,13 +74,16 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
   }
 
   /**
-   * A card of the hand that can be placed in the pyramid is selected with a click: the framework selects it when it has a menu,
-   * and lets go of the other cards selected. The player then clicks the slot of the pyramid (see `PyramidSlotDescription`).
+   * A card of the hand that can be placed or discarded is selected with a click: the framework selects it when it has a menu,
+   * and lets go of the other cards selected. The player then clicks a slot of the pyramid (see `PyramidSlotDescription`)
+   * or a cursed discard pile.
    */
   getItemMenu(item: MaterialItem<number, LocationType>, context: Context, legalMoves: MaterialMove<number, MaterialType, LocationType>[]) {
     if (item.location.type !== LocationType.PlayerHand) return undefined
-    const canPlace = legalMoves.some((move) => isMoveItemType(MaterialType.StoneCard)(move) && move.itemIndex === context.index && move.location.type === LocationType.Pyramid)
-    return canPlace ? createElement(ChooseSlotLabel) : undefined
+    const destinations = legalMoves.filter(isMoveItemType(MaterialType.StoneCard)).filter((move) => move.itemIndex === context.index)
+    const place = destinations.some((move) => move.location.type === LocationType.Pyramid)
+    const discard = destinations.some((move) => move.location.type === LocationType.CursedDiscard)
+    return place || discard ? createElement(ChooseDestinationLabel, { place, discard }) : undefined
   }
 
   getItemExtraCss(item: MaterialItem<number, LocationType>) {
@@ -109,7 +113,7 @@ class CursedDiscardCardDescription extends PortraitCardDescription<CurseType> {
   help = CursedDiscardCardHelp
 
   canShortClick(move: MaterialMove<number, MaterialType, LocationType>, context: Context) {
-    return isNileDiscardTo(move, context.rules.material(MaterialType.CursedDiscardCard).getItem<CurseType>(context.index).id, context.rules)
+    return isClickDiscardTo(move, context.rules.material(MaterialType.CursedDiscardCard).getItem<CurseType>(context.index).id, context.rules)
   }
 }
 

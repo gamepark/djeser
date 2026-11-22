@@ -17,6 +17,8 @@
   "header.discard.player": "{player} doit défausser la 1re Pierre du Nil",
   "header.end-of-turn": "Le Nil se remplit",
   "card.choose-slot": "Cliquez sur un emplacement de votre pyramide",
+  "card.choose-discard": "Cliquez sur une défausse maudite",
+  "card.choose-slot-or-discard": "Cliquez sur un emplacement de votre pyramide ou sur une défausse maudite",
   "header.end-of-turn.solo": "Imhotep pose une Pierre, puis le Nil se remplit",
   "help.stone": "Carte Pierre",
   "help.stone.title": "Carte Pierre {color, select, 1 {bleue} 2 {jaune} 3 {violette} 4 {rouge} 5 {verte} other {}} de valeur {value}",
