@@ -155,9 +155,19 @@ export class GameState extends MaterialRulesPart<number, MaterialType, LocationT
 
   /** "Imhotep earns 1 point for each card placed in his pyramid, plus the value of the Stone card at level IV, then the Common Objective cards met." */
   get imhotepScore() {
+    const { pyramid, top, objectives } = this.imhotepScoreDetail
+    return pyramid + top + objectives
+  }
+
+  /** The points of Imhotep, as the rulebook adds them up: the end of game table shows them line by line. */
+  get imhotepScoreDetail() {
     const cards = this.imhotepPyramidCards
     const top = cards.find((card) => card.y === IMHOTEP_PYRAMID_LEVELS - 1)
-    return cards.length + (top ? getStoneValue(top.id) : 0) + OBJECTIVE_POINTS * this.objectivesMet(cards).length
+    return {
+      pyramid: cards.length,
+      top: top ? getStoneValue(top.id) : 0,
+      objectives: OBJECTIVE_POINTS * this.objectivesMet(cards).length
+    }
   }
 
   /**

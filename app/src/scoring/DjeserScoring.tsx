@@ -12,6 +12,9 @@ enum ScoringKey {
   Hand,
   Total,
   TieBreaker,
+  ImhotepPyramid,
+  ImhotepTop,
+  ImhotepObjectives,
   Imhotep
 }
 
@@ -22,8 +25,13 @@ const labels: Record<ScoringKey, string> = {
   [ScoringKey.Hand]: 'scoring.hand',
   [ScoringKey.Total]: 'scoring.total',
   [ScoringKey.TieBreaker]: 'scoring.tie-breaker',
+  [ScoringKey.ImhotepPyramid]: 'scoring.imhotep.pyramid',
+  [ScoringKey.ImhotepTop]: 'scoring.imhotep.top',
+  [ScoringKey.ImhotepObjectives]: 'scoring.imhotep.objectives',
   [ScoringKey.Imhotep]: 'scoring.imhotep'
 }
+
+const boldKeys = [ScoringKey.Total, ScoringKey.Imhotep]
 
 /** Some players have the same total: the total value of their pyramid decides. */
 const hasTie = (rules: DjeserRules) => {
@@ -35,21 +43,21 @@ const hasTie = (rules: DjeserRules) => {
 /**
  * The end of game table, line by line as the rulebook adds up the Prestige points: 1 point per card of the pyramid, the value of
  * the card of level III, 3 points per Common Objective met, minus the value of the cards left in hand. The tie-breaker shows only
- * when it is needed; in solo, Imhotep's score follows. Everything is computed from the state.
+ * when it is needed; in solo, Imhotep's points follow, line by line too. Everything is computed from the state.
  */
 export class DjeserScoring implements ScoringDescription<number, DjeserRules, ScoringKey> {
   ResultHeader = DjeserResultHeader
 
   getScoringKeys(rules: DjeserRules) {
     const keys = [ScoringKey.Pyramid, ScoringKey.Top, ScoringKey.Objectives, ScoringKey.Hand, ScoringKey.Total]
-    if (rules.players.length === 1) keys.push(ScoringKey.Imhotep)
+    if (rules.players.length === 1) keys.push(ScoringKey.ImhotepPyramid, ScoringKey.ImhotepTop, ScoringKey.ImhotepObjectives, ScoringKey.Imhotep)
     else if (hasTie(rules)) keys.push(ScoringKey.TieBreaker)
     return keys
   }
 
   getScoringHeader(key: ScoringKey) {
     const label = <Trans i18nKey={labels[key]} />
-    return key === ScoringKey.Total ? <strong>{label}</strong> : label
+    return boldKeys.includes(key) ? <strong>{label}</strong> : label
   }
 
   getScoringPlayerData(key: ScoringKey, player: number, rules: DjeserRules) {
@@ -68,8 +76,14 @@ export class DjeserScoring implements ScoringDescription<number, DjeserRules, Sc
         return <strong>{state.playerScore(player)}</strong>
       case ScoringKey.TieBreaker:
         return pyramidValue(state.pyramidCards(player))
+      case ScoringKey.ImhotepPyramid:
+        return state.imhotepScoreDetail.pyramid
+      case ScoringKey.ImhotepTop:
+        return state.imhotepScoreDetail.top
+      case ScoringKey.ImhotepObjectives:
+        return state.imhotepScoreDetail.objectives
       case ScoringKey.Imhotep:
-        return state.imhotepScore
+        return <strong>{state.imhotepScore}</strong>
     }
   }
 }
