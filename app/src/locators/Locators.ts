@@ -2,8 +2,10 @@ import { css } from '@emotion/react'
 import { LocationType } from '@gamepark/djeser/material/LocationType'
 import { MaterialType } from '@gamepark/djeser/material/MaterialType'
 import { DeckLocator, DropAreaDescription, ItemContext, ListLocator, Locator, MaterialContext } from '@gamepark/react-game'
-import { Location, MaterialItem } from '@gamepark/rules-api'
+import { isMoveItemType, Location, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { GameState } from '@gamepark/djeser/rules/GameState'
+import { PlayerTurnRule } from '@gamepark/djeser/rules/PlayerTurnRule'
+import { RuleId } from '@gamepark/djeser/rules/RuleId'
 import { cardHoverTransform } from './CardHover'
 import { HandCountDescription } from './HandCountDescription'
 import { ImhotepNameDescription } from './ImhotepNameDescription'
@@ -123,18 +125,40 @@ class PlayerHandLocator extends ListLocator<number, MaterialType, LocationType> 
   }
 }
 
-/** A slot of a pyramid is the size of a card: it lights up when a card can be placed there, and the tutorial can focus it. */
-const pyramidSlotDescription = new DropAreaDescription<number, MaterialType, LocationType>({
-  width: cardWidth,
-  height: cardHeight,
-  borderRadius: cardBorderRadius,
-  extraCss: css`
+/** The card of the player's hand selected with a click, to be placed in the pyramid with a click on a slot. */
+const selectedHandCard = (context: Context) =>
+  context.rules.material(MaterialType.StoneCard).location(LocationType.PlayerHand).player(context.player).selected()
+
+/**
+ * A slot of a pyramid is the size of a card: it lights up when a card can be placed there, and the tutorial can focus it.
+ * Once a card of the hand is selected, a click on a slot places it there.
+ */
+class PyramidSlotDescription extends DropAreaDescription<number, MaterialType, LocationType> {
+  width = cardWidth
+  height = cardHeight
+  borderRadius = cardBorderRadius
+  extraCss = css`
     border: 0.1em dashed rgba(255, 255, 255, 0.8);
   `
-})
+
+  canShortClick(move: MaterialMove<number, MaterialType, LocationType>, location: Loc, context: Context) {
+    return this.isMoveToLocation(move, location, context) && isMoveItemType(MaterialType.StoneCard)(move) && selectedHandCard(context).getIndexes().includes(move.itemIndex)
+  }
+}
 
 class PyramidLocator extends Locator<number, MaterialType, LocationType> {
-  locationDescription = pyramidSlotDescription
+  locationDescription = new PyramidSlotDescription()
+
+  /** While a card of the hand is selected, the slots where the rules let it go are shown, to be clicked. */
+  getLocations(context: Context) {
+    if (context.player === undefined || context.rules.game.rule?.id !== RuleId.PlayerTurn || context.rules.getActivePlayer() !== context.player) return []
+    const selected = selectedHandCard(context).getIndexes()
+    if (selected.length !== 1) return []
+    return new PlayerTurnRule(context.rules.game).placeMoves
+      .filter(isMoveItemType(MaterialType.StoneCard))
+      .filter((move) => move.itemIndex === selected[0])
+      .map((move) => move.location as Loc)
+  }
 
   getCoordinates(location: Loc, context: Context) {
     return playerPyramidSpot(context.rules, location.player!, context.player, location.x ?? 0, location.y ?? 0)

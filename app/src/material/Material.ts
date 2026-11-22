@@ -4,8 +4,10 @@ import { LocationType } from '@gamepark/djeser/material/LocationType'
 import { MaterialType } from '@gamepark/djeser/material/MaterialType'
 import { NileCard } from '@gamepark/djeser/material/NileCard'
 import { StoneCard } from '@gamepark/djeser/material/StoneCard'
+import { css } from '@emotion/react'
 import { CardDescription, ItemContext, MaterialDescription } from '@gamepark/react-game'
-import { isMoveItemType, MaterialMove, MaterialRules } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialItem, MaterialMove, MaterialRules } from '@gamepark/rules-api'
+import { createElement } from 'react'
 import {
   curseImages,
   FirstPlayerCard,
@@ -21,6 +23,7 @@ import { CursedDiscardCardHelp } from './help/CursedDiscardCardHelp'
 import { FirstPlayerCardHelp } from './help/FirstPlayerCardHelp'
 import { NileCardHelp } from './help/NileCardHelp'
 import { StoneCardHelp } from './help/StoneCardHelp'
+import { ChooseSlotLabel } from './ChooseSlotLabel'
 
 type Context = ItemContext<number, MaterialType, LocationType>
 
@@ -68,7 +71,27 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
     if (move.itemIndex === context.index) return true
     return item.location.type === LocationType.Quarry && stones.getItem(move.itemIndex).location.type === LocationType.Quarry
   }
+
+  /**
+   * A card of the hand that can be placed in the pyramid is selected with a click: the framework selects it when it has a menu,
+   * and lets go of the other cards selected. The player then clicks the slot of the pyramid (see `PyramidSlotDescription`).
+   */
+  getItemMenu(item: MaterialItem<number, LocationType>, context: Context, legalMoves: MaterialMove<number, MaterialType, LocationType>[]) {
+    if (item.location.type !== LocationType.PlayerHand) return undefined
+    const canPlace = legalMoves.some((move) => isMoveItemType(MaterialType.StoneCard)(move) && move.itemIndex === context.index && move.location.type === LocationType.Pyramid)
+    return canPlace ? createElement(ChooseSlotLabel) : undefined
+  }
+
+  getItemExtraCss(item: MaterialItem<number, LocationType>) {
+    return item.selected && item.location.type === LocationType.PlayerHand ? selectedCss : undefined
+  }
 }
+
+const selectedCss = css`
+  > * {
+    box-shadow: 0 0 0.3em 0.2em white;
+  }
+`
 
 class NileCardDescription extends LandscapeCardDescription<NileCard> {
   images = nileImages
