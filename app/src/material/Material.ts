@@ -30,13 +30,16 @@ type Context = ItemContext<number, MaterialType, LocationType>
 /**
  * A click on a cursed discard pile, or on its cursed discard card, discards there:
  * - at the end of the turn, the Stone card of the Nile closest to the cursed discards;
- * - during the turn, the card of the hand selected with a click.
+ * - during the turn, the card of the hand or of the pyramid selected with a click.
  */
 const isClickDiscardTo = (move: MaterialMove<number, MaterialType, LocationType>, curse: CurseType, rules: MaterialRules) => {
   if (!isMoveItemType(MaterialType.StoneCard)(move) || move.location.type !== LocationType.CursedDiscard || move.location.id !== curse) return false
   const item = rules.material(MaterialType.StoneCard).getItem(move.itemIndex)
-  return item.location.type === LocationType.Nile || (item.location.type === LocationType.PlayerHand && !!item.selected)
+  return item.location.type === LocationType.Nile || (isSelectable(item) && !!item.selected)
 }
+
+/** A card of a hand or of a pyramid can be selected with a click, to be placed or discarded with a click on its destination. */
+const isSelectable = (item: MaterialItem<number, LocationType>) => item.location.type === LocationType.PlayerHand || item.location.type === LocationType.Pyramid
 
 /** A card lying in landscape: Stone, Nile and first player cards. */
 abstract class LandscapeCardDescription<Id> extends CardDescription<number, MaterialType, LocationType, Id> {
@@ -74,12 +77,12 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
   }
 
   /**
-   * A card of the hand that can be placed or discarded is selected with a click: the framework selects it when it has a menu,
-   * and lets go of the other cards selected. The player then clicks a slot of the pyramid (see `PyramidSlotDescription`)
-   * or a cursed discard pile.
+   * A card of the hand that can be placed or discarded, or a card of the pyramid that can be discarded, is selected with a click:
+   * the framework selects it when it has a menu, and lets go of the other cards selected. The player then clicks a slot of the
+   * pyramid (see `PyramidSlotDescription`) or a cursed discard pile.
    */
   getItemMenu(item: MaterialItem<number, LocationType>, context: Context, legalMoves: MaterialMove<number, MaterialType, LocationType>[]) {
-    if (item.location.type !== LocationType.PlayerHand) return undefined
+    if (!isSelectable(item)) return undefined
     const destinations = legalMoves.filter(isMoveItemType(MaterialType.StoneCard)).filter((move) => move.itemIndex === context.index)
     const place = destinations.some((move) => move.location.type === LocationType.Pyramid)
     const discard = destinations.some((move) => move.location.type === LocationType.CursedDiscard)
@@ -87,7 +90,7 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
   }
 
   getItemExtraCss(item: MaterialItem<number, LocationType>) {
-    return item.selected && item.location.type === LocationType.PlayerHand ? selectedCss : undefined
+    return item.selected && isSelectable(item) ? selectedCss : undefined
   }
 }
 
