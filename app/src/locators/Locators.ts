@@ -1,11 +1,12 @@
 import { css } from '@emotion/react'
 import { LocationType } from '@gamepark/djeser/material/LocationType'
 import { MaterialType } from '@gamepark/djeser/material/MaterialType'
-import { DeckLocator, DropAreaDescription, ItemContext, ListLocator, Locator, MaterialContext } from '@gamepark/react-game'
+import { DeckLocator, DropAreaDescription, ItemContext, ListLocator, LocationContext, Locator, MaterialContext } from '@gamepark/react-game'
 import { isMoveItemType, Location, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { GameState } from '@gamepark/djeser/rules/GameState'
 import { PlayerTurnRule } from '@gamepark/djeser/rules/PlayerTurnRule'
 import { RuleId } from '@gamepark/djeser/rules/RuleId'
+import { PYRAMID_LEVELS, pyramidSlots } from '@gamepark/djeser/material/Pyramid'
 import { cardHoverTransform } from './CardHover'
 import { HandCountDescription } from './HandCountDescription'
 import { ImhotepNameDescription } from './ImhotepNameDescription'
@@ -129,35 +130,64 @@ class PlayerHandLocator extends ListLocator<number, MaterialType, LocationType> 
 const selectedHandCard = (context: Context) =>
   context.rules.material(MaterialType.StoneCard).location(LocationType.PlayerHand).player(context.player).selected()
 
+/** The slots of the player's pyramid where the card of the hand selected with a click can be placed. */
+const selectedCardSlots = (context: Context): Loc[] => {
+  if (context.player === undefined || context.rules.game.rule?.id !== RuleId.PlayerTurn || context.rules.getActivePlayer() !== context.player) return []
+  const selected = selectedHandCard(context).getIndexes()
+  if (selected.length !== 1) return []
+  return new PlayerTurnRule(context.rules.game).placeMoves
+    .filter(isMoveItemType(MaterialType.StoneCard))
+    .filter((move) => move.itemIndex === selected[0])
+    .map((move) => move.location as Loc)
+}
+
+/** The free slots of the player's pyramid that a card could fill: the free slots of level I, and above 2 cards that would support it. */
+const openSlots = (context: Context): Loc[] => {
+  if (context.player === undefined || !context.rules.players.includes(context.player)) return []
+  const cards = context.rules.material(MaterialType.StoneCard).location(LocationType.Pyramid).player(context.player).getItems()
+  const taken = (x: number, y: number) => cards.some((card) => card.location.x === x && card.location.y === y)
+  return pyramidSlots(PYRAMID_LEVELS)
+    .filter(({ x, y }) => !taken(x, y) && (y === 0 || (taken(x, y - 1) && taken(x + 1, y - 1))))
+    .map(({ x, y }) => ({ type: LocationType.Pyramid, player: context.player, x, y }))
+}
+
+const faintSlotCss = css`
+  border: 0.05em solid rgba(255, 255, 255, 0.3);
+`
+
+const openSlotCss = css`
+  border: 0.1em dashed rgba(255, 255, 255, 0.8);
+`
+
 /**
- * A slot of a pyramid is the size of a card: it lights up when a card can be placed there, and the tutorial can focus it.
+ * A slot of a pyramid is the size of a card. The free slots of the player's pyramid are always outlined faintly, so that they
+ * see where it stands; a slot stands out when the card dragged or selected can go there, and the tutorial can focus it.
  * Once a card of the hand is selected, a click on a slot places it there.
  */
 class PyramidSlotDescription extends DropAreaDescription<number, MaterialType, LocationType> {
   width = cardWidth
   height = cardHeight
   borderRadius = cardBorderRadius
-  extraCss = css`
-    border: 0.1em dashed rgba(255, 255, 255, 0.8);
-  `
 
+  getExtraCss(location: Loc, context: LocationContext<number, MaterialType, LocationType>) {
+    const open = context.canDrop || selectedCardSlots(context).some((slot) => slot.x === location.x && slot.y === location.y)
+    return open ? openSlotCss : faintSlotCss
+  }
+
+  /** A click places the selected card, or the only card that can go there: the framework plays the click only when one move matches. */
   canShortClick(move: MaterialMove<number, MaterialType, LocationType>, location: Loc, context: Context) {
-    return this.isMoveToLocation(move, location, context) && isMoveItemType(MaterialType.StoneCard)(move) && selectedHandCard(context).getIndexes().includes(move.itemIndex)
+    if (!this.isMoveToLocation(move, location, context) || !isMoveItemType(MaterialType.StoneCard)(move)) return false
+    const selected = selectedHandCard(context).getIndexes()
+    return !selected.length || selected.includes(move.itemIndex)
   }
 }
 
 class PyramidLocator extends Locator<number, MaterialType, LocationType> {
   locationDescription = new PyramidSlotDescription()
 
-  /** While a card of the hand is selected, the slots where the rules let it go are shown, to be clicked. */
+  /** The free slots of the player's pyramid are always shown; while a card is dragged, the framework adds the drop areas. */
   getLocations(context: Context) {
-    if (context.player === undefined || context.rules.game.rule?.id !== RuleId.PlayerTurn || context.rules.getActivePlayer() !== context.player) return []
-    const selected = selectedHandCard(context).getIndexes()
-    if (selected.length !== 1) return []
-    return new PlayerTurnRule(context.rules.game).placeMoves
-      .filter(isMoveItemType(MaterialType.StoneCard))
-      .filter((move) => move.itemIndex === selected[0])
-      .map((move) => move.location as Loc)
+    return openSlots(context)
   }
 
   getCoordinates(location: Loc, context: Context) {
