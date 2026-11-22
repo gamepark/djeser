@@ -7,6 +7,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
+import { DjeserHistory } from './history/DjeserHistory'
 import { Locators } from './locators/Locators'
 import { Material } from './material/Material'
 import { DjeserScoring } from './scoring/DjeserScoring'
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
       ai={DjeserAI}
       tutorial={new Tutorial()}
       scoring={new DjeserScoring()}
+      logs={new DjeserHistory()}
     >
       <App />
     </GameProvider>
