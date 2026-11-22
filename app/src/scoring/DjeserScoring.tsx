@@ -3,6 +3,7 @@ import { pyramidValue } from '@gamepark/djeser/material/Pyramid'
 import { GameState } from '@gamepark/djeser/rules/GameState'
 import { ScoringDescription } from '@gamepark/react-game'
 import { Trans } from 'react-i18next'
+import { DjeserResultHeader } from './DjeserResultHeader'
 
 enum ScoringKey {
   Pyramid = 1,
@@ -37,6 +38,8 @@ const hasTie = (rules: DjeserRules) => {
  * when it is needed; in solo, Imhotep's score follows. Everything is computed from the state.
  */
 export class DjeserScoring implements ScoringDescription<number, DjeserRules, ScoringKey> {
+  ResultHeader = DjeserResultHeader
+
   getScoringKeys(rules: DjeserRules) {
     const keys = [ScoringKey.Pyramid, ScoringKey.Top, ScoringKey.Objectives, ScoringKey.Hand, ScoringKey.Total]
     if (rules.players.length === 1) keys.push(ScoringKey.Imhotep)
