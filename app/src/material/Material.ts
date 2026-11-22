@@ -42,6 +42,10 @@ const isClickDiscardTo = (move: MaterialMove<number, MaterialType, LocationType>
 /** A card of a hand or of a pyramid can be selected with a click, to be placed or discarded with a click on its destination. */
 const isSelectable = (item: MaterialItem<number, LocationType>) => item.location.type === LocationType.PlayerHand || item.location.type === LocationType.Pyramid
 
+/** A cursed card of the hand of the player who looks at the table: it cannot be placed in their pyramid. */
+const isCursedInMyHand = (item: MaterialItem<number, LocationType>, context: Context) =>
+  item.location.type === LocationType.PlayerHand && item.location.player === context.player && item.id !== undefined && new GameState(context.rules.game).isCursed(item.id)
+
 /** A card lying in landscape: Stone, Nile and first player cards. */
 abstract class LandscapeCardDescription<Id> extends CardDescription<number, MaterialType, LocationType, Id> {
   width = cardWidth
@@ -87,14 +91,12 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
     const destinations = legalMoves.filter(isMoveItemType(MaterialType.StoneCard)).filter((move) => move.itemIndex === context.index)
     const place = destinations.some((move) => move.location.type === LocationType.Pyramid)
     const discard = destinations.some((move) => move.location.type === LocationType.CursedDiscard)
-    return place || discard ? createElement(ChooseDestinationLabel, { place, discard }) : undefined
+    return place || discard ? createElement(ChooseDestinationLabel, { place, discard, cursed: isCursedInMyHand(item, context) }) : undefined
   }
 
   /** A cursed card of the player's hand is darkened: it cannot be placed in the pyramid. */
   getItemExtraCss(item: MaterialItem<number, LocationType>, context: Context) {
-    const cursed =
-      item.location.type === LocationType.PlayerHand && item.location.player === context.player && item.id !== undefined && new GameState(context.rules.game).isCursed(item.id)
-    return [item.selected && isSelectable(item) && selectedCss, cursed && cursedCss]
+    return [item.selected && isSelectable(item) && selectedCss, isCursedInMyHand(item, context) && cursedCss]
   }
 }
 

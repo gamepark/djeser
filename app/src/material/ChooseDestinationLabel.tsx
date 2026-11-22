@@ -4,11 +4,21 @@ import { cardHeight } from '../locators/TableLayout'
 
 const fontSize = 0.5
 
-/** Shown under a card of the hand selected with a click: the player then clicks a slot of their pyramid or a cursed discard pile. */
-export const ChooseDestinationLabel = ({ place, discard }: { place: boolean; discard: boolean }) => {
+type Props = { place: boolean; discard: boolean; cursed: boolean }
+
+/**
+ * Shown under a card of the hand selected with a click: the player then clicks a slot of their pyramid or a cursed discard pile.
+ * A cursed card says first why it cannot be placed.
+ */
+export const ChooseDestinationLabel = ({ place, discard, cursed }: Props) => {
   const { t } = useTranslation()
   const key = place && discard ? 'card.choose-slot-or-discard' : place ? 'card.choose-slot' : 'card.choose-discard'
-  return <div css={label}>{t(key)}</div>
+  return (
+    <div css={label}>
+      {cursed && <div>{t('card.cursed')}</div>}
+      <div>{t(key)}</div>
+    </div>
+  )
 }
 
 const label = css`
@@ -23,5 +33,6 @@ const label = css`
   color: white;
   font-size: ${fontSize}em;
   white-space: nowrap;
+  text-align: center;
   pointer-events: none;
 `
