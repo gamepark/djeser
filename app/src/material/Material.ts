@@ -5,7 +5,7 @@ import { MaterialType } from '@gamepark/djeser/material/MaterialType'
 import { NileCard } from '@gamepark/djeser/material/NileCard'
 import { StoneCard } from '@gamepark/djeser/material/StoneCard'
 import { CardDescription, ItemContext, MaterialDescription } from '@gamepark/react-game'
-import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialMove, MaterialRules } from '@gamepark/rules-api'
 import {
   curseImages,
   FirstPlayerCard,
@@ -21,6 +21,18 @@ import { CursedDiscardCardHelp } from './help/CursedDiscardCardHelp'
 import { FirstPlayerCardHelp } from './help/FirstPlayerCardHelp'
 import { NileCardHelp } from './help/NileCardHelp'
 import { StoneCardHelp } from './help/StoneCardHelp'
+
+type Context = ItemContext<number, MaterialType, LocationType>
+
+/**
+ * The end of turn discard: the Stone card closest to the cursed discards leaves the Nile for the pile of this curse.
+ * A click on the pile, or on its cursed discard card, plays it.
+ */
+const isNileDiscardTo = (move: MaterialMove<number, MaterialType, LocationType>, curse: CurseType, rules: MaterialRules) =>
+  isMoveItemType(MaterialType.StoneCard)(move) &&
+  move.location.type === LocationType.CursedDiscard &&
+  move.location.id === curse &&
+  rules.material(MaterialType.StoneCard).getItem(move.itemIndex).location.type === LocationType.Nile
 
 /** A card lying in landscape: Stone, Nile and first player cards. */
 abstract class LandscapeCardDescription<Id> extends CardDescription<number, MaterialType, LocationType, Id> {
@@ -43,13 +55,18 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
 
   /**
    * A Stone card of the Nile or the quarry can only go to the hand: a click collects it. Placing and discarding are dragged.
-   * A click anywhere on the quarry draws its top card.
+   * A click anywhere on the quarry draws its top card. A click on the top card of a cursed discard pile discards the first Stone of the Nile there.
    */
-  canShortClick(move: MaterialMove<number, MaterialType, LocationType>, context: ItemContext<number, MaterialType, LocationType>) {
+  canShortClick(move: MaterialMove<number, MaterialType, LocationType>, context: Context) {
+    const stones = context.rules.material(MaterialType.StoneCard)
+    const item = stones.getItem(context.index)
+    if (item.location.type === LocationType.CursedDiscard) {
+      const isTop = stones.location(LocationType.CursedDiscard).locationId(item.location.id).maxBy((pile) => pile.location.x!).getIndex() === context.index
+      return isTop && isNileDiscardTo(move, item.location.id as CurseType, context.rules)
+    }
     if (!isMoveItemType(MaterialType.StoneCard)(move) || move.location.type !== LocationType.PlayerHand) return false
     if (move.itemIndex === context.index) return true
-    const stones = context.rules.material(MaterialType.StoneCard)
-    return stones.getItem(context.index).location.type === LocationType.Quarry && stones.getItem(move.itemIndex).location.type === LocationType.Quarry
+    return item.location.type === LocationType.Quarry && stones.getItem(move.itemIndex).location.type === LocationType.Quarry
   }
 }
 
@@ -67,6 +84,10 @@ class CommonObjectiveCardDescription extends PortraitCardDescription<CommonObjec
 class CursedDiscardCardDescription extends PortraitCardDescription<CurseType> {
   images = curseImages
   help = CursedDiscardCardHelp
+
+  canShortClick(move: MaterialMove<number, MaterialType, LocationType>, context: Context) {
+    return isNileDiscardTo(move, context.rules.material(MaterialType.CursedDiscardCard).getItem<CurseType>(context.index).id, context.rules)
+  }
 }
 
 class FirstPlayerCardDescription extends LandscapeCardDescription<undefined> {
