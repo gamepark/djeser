@@ -16,6 +16,7 @@
   "header.discard.you": "Wirf die 1. Steinkarte des Nils auf den Ablagestapel der <values>Werte</values> oder der <colors>Farben</colors> ab",
   "header.discard.player": "{player} muss die 1. Steinkarte des Nils abwerfen",
   "header.end-of-turn": "Der Nil wird aufgefüllt",
+  "card.choose-slot": "Klicke auf einen Platz deiner Pyramide",
   "header.end-of-turn.solo": "Imhotep legt eine Steinkarte, dann wird der Nil aufgefüllt",
   "help.stone": "Steinkarte",
   "help.stone.title": "{color, select, 1 {Blaue} 2 {Gelbe} 3 {Violette} 4 {Rote} 5 {Grüne} other {}} Steinkarte mit dem Wert {value}",

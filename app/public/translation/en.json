@@ -16,6 +16,7 @@
   "header.discard.you": "Discard the 1st Stone card of the Nile in the cursed discard pile of <values>values</values> or of <colors>colors</colors>",
   "header.discard.player": "{player} must discard the 1st Stone card of the Nile",
   "header.end-of-turn": "The Nile is filled",
+  "card.choose-slot": "Click a slot of your pyramid",
   "header.end-of-turn.solo": "Imhotep places a Stone card, then the Nile is filled",
   "help.stone": "Stone card",
   "help.stone.title": "{color, select, 1 {Blue} 2 {Yellow} 3 {Purple} 4 {Red} 5 {Green} other {}} Stone card of value {value}",
