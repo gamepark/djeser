@@ -17,6 +17,8 @@
   "header.discard.player": "{player} сбрасывает 1-ю карту Камня с Нила",
   "header.end-of-turn": "Нил пополняется",
   "card.choose-slot": "Нажми на место в своей пирамиде",
+  "card.choose-discard": "Нажми на проклятый сброс",
+  "card.choose-slot-or-discard": "Нажми на место в своей пирамиде или на проклятый сброс",
   "header.end-of-turn.solo": "Имхотеп выкладывает карту Камня, затем Нил пополняется",
   "help.stone": "Карта Камня",
   "help.stone.title": "{color, select, 1 {Синяя} 2 {Жёлтая} 3 {Фиолетовая} 4 {Красная} 5 {Зелёная} other {}} карта Камня со значением {value}",

@@ -17,6 +17,8 @@
   "header.discard.player": "{player} deve scartare la 1ª Pietra del Nilo",
   "header.end-of-turn": "Il Nilo si riempie",
   "card.choose-slot": "Clicca su uno spazio della tua piramide",
+  "card.choose-discard": "Clicca su una pila degli scarti maledetta",
+  "card.choose-slot-or-discard": "Clicca su uno spazio della tua piramide o su una pila degli scarti maledetta",
   "header.end-of-turn.solo": "Imhotep posa una Pietra, poi il Nilo si riempie",
   "help.stone": "Carta Pietra",
   "help.stone.title": "Carta Pietra {color, select, 1 {blu} 2 {gialla} 3 {viola} 4 {rossa} 5 {verde} other {}} di valore {value}",
