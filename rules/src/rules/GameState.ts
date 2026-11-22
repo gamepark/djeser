@@ -135,12 +135,22 @@ export class GameState extends MaterialRulesPart<number, MaterialType, LocationT
    * Subtract the total value of the Stone cards still in hand. Each Common Objective card met adds 3 Prestige points."
    */
   playerScore(player: number) {
+    const { pyramid, top, objectives, hand } = this.playerScoreDetail(player)
+    return pyramid + top + objectives - hand
+  }
+
+  /** The points of a player, as the rulebook adds them up: the end of game table shows them line by line. */
+  playerScoreDetail(player: number) {
     const cards = this.pyramidCards(player)
     const top = cards.find((card) => card.y === PYRAMID_LEVELS - 1)
-    const hand = this.hand(player)
-      .getItems<StoneCard>()
-      .reduce((total, item) => total + getStoneValue(item.id), 0)
-    return cards.length + (top ? getStoneValue(top.id) : 0) - hand + OBJECTIVE_POINTS * this.objectivesMet(cards).length
+    return {
+      pyramid: cards.length,
+      top: top ? getStoneValue(top.id) : 0,
+      objectives: OBJECTIVE_POINTS * this.objectivesMet(cards).length,
+      hand: this.hand(player)
+        .getItems<StoneCard>()
+        .reduce((total, item) => total + getStoneValue(item.id), 0)
+    }
   }
 
   /** "Imhotep earns 1 point for each card placed in his pyramid, plus the value of the Stone card at level IV, then the Common Objective cards met." */

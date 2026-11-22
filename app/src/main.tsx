@@ -9,6 +9,7 @@ import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
 import { Locators } from './locators/Locators'
 import { Material } from './material/Material'
+import { DjeserScoring } from './scoring/DjeserScoring'
 import { Tutorial } from './tutorial/Tutorial'
 
 createRoot(document.getElementById('root')!).render(
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
       animations={gameAnimations}
       ai={DjeserAI}
       tutorial={new Tutorial()}
+      scoring={new DjeserScoring()}
     >
       <App />
     </GameProvider>
