@@ -16,6 +16,7 @@
   "header.discard.you": "Wirf die 1. Steinkarte des Nils auf den Ablagestapel der <values>Werte</values> oder der <colors>Farben</colors> ab",
   "header.discard.player": "{player} muss die 1. Steinkarte des Nils abwerfen",
   "header.end-of-turn": "Der Nil wird aufgefüllt",
+  "card.cursed": "Verfluchte Karte: Sie kann nicht in deine Pyramide gelegt werden",
   "card.choose-slot": "Klicke auf einen Platz deiner Pyramide",
   "card.choose-discard": "Klicke auf einen verfluchten Ablagestapel",
   "card.choose-slot-or-discard": "Klicke auf einen Platz deiner Pyramide oder auf einen verfluchten Ablagestapel",

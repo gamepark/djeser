@@ -16,6 +16,7 @@
   "header.discard.you": "Discard the 1st Stone card of the Nile in the cursed discard pile of <values>values</values> or of <colors>colors</colors>",
   "header.discard.player": "{player} must discard the 1st Stone card of the Nile",
   "header.end-of-turn": "The Nile is filled",
+  "card.cursed": "Cursed card: it cannot be placed in your pyramid",
   "card.choose-slot": "Click a slot of your pyramid",
   "card.choose-discard": "Click a cursed discard pile",
   "card.choose-slot-or-discard": "Click a slot of your pyramid or a cursed discard pile",

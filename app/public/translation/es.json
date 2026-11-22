@@ -16,6 +16,7 @@
   "header.discard.you": "Descarta la 1.ª Piedra del Nilo en la pila de descarte de los <values>valores</values> o de los <colors>colores</colors>",
   "header.discard.player": "{player} debe descartar la 1.ª Piedra del Nilo",
   "header.end-of-turn": "El Nilo se rellena",
+  "card.cursed": "Carta maldita: no se puede colocar en tu pirámide",
   "card.choose-slot": "Haz clic en un espacio de tu pirámide",
   "card.choose-discard": "Haz clic en una pila de descarte maldita",
   "card.choose-slot-or-discard": "Haz clic en un espacio de tu pirámide o en una pila de descarte maldita",

@@ -16,6 +16,7 @@
   "header.discard.you": "Сбрось 1-ю карту Камня с Нила в проклятый сброс <values>значений</values> или <colors>цветов</colors>",
   "header.discard.player": "{player} сбрасывает 1-ю карту Камня с Нила",
   "header.end-of-turn": "Нил пополняется",
+  "card.cursed": "Проклятая карта: её нельзя выложить в свою пирамиду",
   "card.choose-slot": "Нажми на место в своей пирамиде",
   "card.choose-discard": "Нажми на проклятый сброс",
   "card.choose-slot-or-discard": "Нажми на место в своей пирамиде или на проклятый сброс",
