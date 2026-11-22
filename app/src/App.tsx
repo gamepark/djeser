@@ -19,7 +19,7 @@ export function App() {
       <MaterialHeader rulesStepsHeaders={Headers} loading={loading} />
       <MaterialImageLoader onImagesLoad={() => setImagesLoading(false)} />
       <MaterialGameSounds />
-      <Menu />
+      <Menu resultDialogDelay={3000} />
       <FailuresDialog />
       <FullscreenDialog />
     </>
