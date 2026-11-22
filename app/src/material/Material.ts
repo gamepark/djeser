@@ -4,6 +4,7 @@ import { LocationType } from '@gamepark/djeser/material/LocationType'
 import { MaterialType } from '@gamepark/djeser/material/MaterialType'
 import { NileCard } from '@gamepark/djeser/material/NileCard'
 import { StoneCard } from '@gamepark/djeser/material/StoneCard'
+import { GameState } from '@gamepark/djeser/rules/GameState'
 import { css } from '@emotion/react'
 import { CardDescription, ItemContext, MaterialDescription } from '@gamepark/react-game'
 import { isMoveItemType, MaterialItem, MaterialMove, MaterialRules } from '@gamepark/rules-api'
@@ -89,14 +90,29 @@ class StoneCardDescription extends LandscapeCardDescription<StoneCard> {
     return place || discard ? createElement(ChooseDestinationLabel, { place, discard }) : undefined
   }
 
-  getItemExtraCss(item: MaterialItem<number, LocationType>) {
-    return item.selected && isSelectable(item) ? selectedCss : undefined
+  /** A cursed card of the player's hand is darkened: it cannot be placed in the pyramid. */
+  getItemExtraCss(item: MaterialItem<number, LocationType>, context: Context) {
+    const cursed =
+      item.location.type === LocationType.PlayerHand && item.location.player === context.player && item.id !== undefined && new GameState(context.rules.game).isCursed(item.id)
+    return [item.selected && isSelectable(item) && selectedCss, cursed && cursedCss]
   }
 }
 
 const selectedCss = css`
   > * {
     box-shadow: 0 0 0.3em 0.2em white;
+  }
+`
+
+/** A dark veil over the face of the card, which leaves the outline of the selection as bright as on the other cards. */
+const cursedCss = css`
+  > *::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
   }
 `
 
