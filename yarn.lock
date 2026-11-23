@@ -542,11 +542,11 @@ __metadata:
   linkType: hard
 
 "@gamepark/rules-api@npm:~7.10.0":
-  version: 7.10.0
-  resolution: "@gamepark/rules-api@npm:7.10.0"
+  version: 7.10.1
+  resolution: "@gamepark/rules-api@npm:7.10.1"
   peerDependencies:
     es-toolkit: ^1.46.0
-  checksum: 10c0/381f8bdaa21442e61fd02de68ee6fe8bbeffd52243c2b194a092bbecef4e2da318b98e93f70ffd25c8986ff6c9423f7388bf8e7f4c4ee25c158ca9847028fa94
+  checksum: 10c0/fe0b4bd51cd0ee0bee79e346486c0172ef385c269c669a95545d5d8604e9891201c0ea633b37e77e835dc6e6144fe544ebacb5cc255172f7db1f136b6431cca7
   languageName: node
   linkType: hard
 
