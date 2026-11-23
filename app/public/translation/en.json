@@ -108,7 +108,7 @@
   "help.first-player": "{player} is the first player. The first player does not change during the game.",
   "help.first-player.end": "When a player places a Stone card at level III of their pyramid, they trigger the end of the game: each player takes one more turn until play returns to the first player (the first player does not take a final turn).",
   "tuto.welcome": "Welcome to the <bold>Djeser</bold> tutorial!",
-  "tuto.theme": "In 2680 BC, Pharaoh Djoser wants to erect the <bold>Step Pyramid of Saqqara</bold>.\nHis architect Imhotep is looking for the greatest architect of Egypt: prove your worth!",
+  "tuto.theme": "In 2680 BC, Pharaoh Djeser wants to erect the <bold>Step Pyramid of Saqqara</bold>.\nHis architect Imhotep is looking for the greatest architect of Egypt: prove your worth!",
   "tuto.goal": "Your goal: build a <bold>pyramid of 6 Stone cards</bold> that earns the most <bold>Prestige points</bold>.",
   "tuto.stones": "These are the <bold>Stone cards</bold>: 5 colors, values from 0 to 9.",
   "tuto.quarry": "They come from the <bold>quarry</bold> along the <bold>Nile</bold>.",

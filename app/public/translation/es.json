@@ -108,7 +108,7 @@
   "help.first-player": "{player} es el jugador inicial. El jugador inicial no cambia durante la partida.",
   "help.first-player.end": "Cuando un jugador coloca una carta Piedra en el nivel III de su pirámide, desencadena el final de la partida: cada uno juega un turno más hasta volver al jugador inicial (este no juega un último turno).",
   "tuto.welcome": "¡Bienvenido al tutorial de <bold>Djeser</bold>!",
-  "tuto.theme": "En el año 2680 a. C., el faraón Djoser quiere erigir la <bold>pirámide escalonada de Saqqara</bold>.\nSu arquitecto Imhotep busca al mejor arquitecto de Egipto: ¡demuestra tu valía!",
+  "tuto.theme": "En el año 2680 a. C., el faraón Djeser quiere erigir la <bold>pirámide escalonada de Saqqara</bold>.\nSu arquitecto Imhotep busca al mejor arquitecto de Egipto: ¡demuestra tu valía!",
   "tuto.goal": "Tu objetivo: construir una <bold>pirámide de 6 cartas Piedra</bold> que dé el máximo de <bold>puntos de Prestigio</bold>.",
   "tuto.stones": "Estas son las <bold>cartas Piedra</bold>: 5 colores, valores del 0 al 9.",
   "tuto.quarry": "Llegan de la <bold>cantera</bold> por el <bold>Nilo</bold>.",
